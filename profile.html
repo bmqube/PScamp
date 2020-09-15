@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>OJscrapper - Dashboard</title>
+    <title>OJscrapper - Profile</title>
 
     <script src="js/app.js"></script>
     <!-- Custom fonts for this template-->
@@ -52,7 +52,7 @@
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a
@@ -80,6 +80,31 @@
             data-target="#collapseTwo"
             aria-expanded="true"
             aria-controls="collapseTwo"
+            onclick="addList()"
+          >
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Classroom</span>
+          </a>
+          <div
+            id="collapseTwo"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div
+              id="classList"
+              class="bg-white py-2 collapse-inner rounded"
+            ></div>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
+            aria-expanded="true"
+            aria-controls="collapseTwo"
           >
             <i class="fas fa-fw fa-cog"></i>
             <span>Components</span>
@@ -96,7 +121,7 @@
               <a class="collapse-item" href="cards.html">Cards</a>
             </div>
           </div>
-        </li>
+        </li> -->
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
@@ -559,7 +584,7 @@
                     <div class="row mb-4">
                       <label for="vjudge" class="col-sm-3 col-md-2 col font-weight-bold col-form-label">VJudge</label>
                       <div class="col-lg-8 col-md-6 col">
-                        <input style="cursor: pointer;" type="text" id="vjudge" class="form-control-plaintext" placeholder="Codechef Handle i.e bmqube" onclick="gotoCC()" readonly>
+                        <input style="cursor: pointer;" type="text" id="vjudge" class="form-control-plaintext" placeholder="VJudge Handle i.e bmqube" onclick="gotoCC()" readonly>
                       </div>
                       <button class="btn btn-success btn-circle" onclick="edit('vjudge')">
                         <i class="fas fa-edit"></i>
@@ -697,6 +722,7 @@
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/classroom.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

@@ -80,6 +80,31 @@
             data-target="#collapseTwo"
             aria-expanded="true"
             aria-controls="collapseTwo"
+            onclick="addList()"
+          >
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Classroom</span>
+          </a>
+          <div
+            id="collapseTwo"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div
+              id="classList"
+              class="bg-white py-2 collapse-inner rounded"
+            ></div>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
+            aria-expanded="true"
+            aria-controls="collapseTwo"
           >
             <i class="fas fa-fw fa-cog"></i>
             <span>Components</span>
@@ -96,7 +121,7 @@
               <a class="collapse-item" href="cards.html">Cards</a>
             </div>
           </div>
-        </li>
+        </li> -->
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
@@ -994,6 +1019,7 @@
 
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
+    <script src="js/classroom.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
