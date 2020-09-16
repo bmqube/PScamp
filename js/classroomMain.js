@@ -2,6 +2,10 @@ const currentLocation = window.location.href;
 const currentURL = new URL(currentLocation);
 const classname = currentURL.searchParams.get("class");
 
+if (!classname) {
+  window.location.replace("/index.html");
+}
+
 const classHeading = document.getElementById("classHeading");
 classHeading.innerText = `Classroom Name : ${classname.toUpperCase()}`;
 
@@ -210,7 +214,7 @@ function addNewContest() {
 }
 
 fetch(linkClass, {
-  method: "GET",
+  method: "POST",
   headers: {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
@@ -222,10 +226,14 @@ fetch(linkClass, {
     }
     const element = data["classroom_list"];
     console.log(element);
+
+    let classFound = false;
+
     for (let i = 0; i < element.length; i++) {
       const elem = element[i];
 
       if (elem["classroom_name"] == classname) {
+        classFound = true;
         const contestList = elem["vjudge_contest_list"];
         len = contestList.length;
 
@@ -237,6 +245,9 @@ fetch(linkClass, {
           const buttonRated = editButton(`edit("is_rated")`);
 
           document.getElementById("addNewPop").classList.remove("d-none");
+          document
+            .getElementById("classDeleteButton")
+            .classList.remove("d-none");
           isBootcamp.parentElement.parentElement.appendChild(buttonBootcamp);
           isRated.parentElement.parentElement.appendChild(buttonRated);
           contestUpdateButton.classList.remove("d-none");
@@ -251,11 +262,14 @@ fetch(linkClass, {
         }
       }
     }
+    if (!classFound) {
+      window.location.replace("/index.html");
+    }
   });
 
 function updateClassInfo() {
   fetch(linkClass, {
-    method: "POST",
+    method: "PUT",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
       "Content-Type": "application/json",
@@ -270,6 +284,33 @@ function updateClassInfo() {
     .then((data) => {
       const alertClassInfo = document.getElementById("alertClassInfo");
       if (data["message"] == "data updated") {
+        const alert = getAlertElement(data["message"], "alert-success");
+        alertClassInfo.appendChild(alert);
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      } else {
+        const alert = getAlertElement(data["message"], "alert-danger");
+        alertClassInfo.appendChild(alert);
+      }
+    });
+}
+
+function deleteClass() {
+  fetch(linkClass, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      classroom_name: classname,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const alertClassInfo = document.getElementById("alertClassInfo");
+      if (data["message"] == "classroom deleted") {
         const alert = getAlertElement(data["message"], "alert-success");
         alertClassInfo.appendChild(alert);
         setTimeout(() => {
@@ -304,7 +345,7 @@ function updateContestInfo() {
   }
 
   fetch(linkClass, {
-    method: "POST",
+    method: "PUT",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
       "Content-Type": "application/json",

@@ -482,9 +482,19 @@
                 <h6
                   id="classHeading"
                   class="m-0 font-weight-bold text-primary text-center"
-                ></h6>
+                >Add New Class</h6>
               </div>
               <div id="classBody" class="card-body">
+                <div class="row mb-4">
+                    <label
+                      for="class_name"
+                      class="col-lg-2 col-md-4 col-5 font-weight-bold col-form-label"
+                      >Class Name: </label
+                    >
+                    <div class="col-lg-8 col-md-6 col-5">
+                      <input type="text" id="class_name" class="form-control">
+                    </div>
+                  </div>
                 <div class="row mb-4">
                   <label
                     for="is_bootcamp"
@@ -494,9 +504,8 @@
                   <div class="col-lg-8 col-md-6 col-5">
                     <!-- <input type="text" id="is_bootcamp" class="form-control-plaintext" readonly> -->
                     <select
-                      class="form-control-plaintext"
+                      class="form-control"
                       id="is_bootcamp"
-                      disabled
                     >
                       <option value="true">True</option>
                       <option value="false">False</option>
@@ -511,236 +520,29 @@
                   >
                   <div class="col-lg-8 col-md-6 col-5">
                     <select
-                      class="form-control-plaintext"
+                      class="form-control"
                       id="is_rated"
-                      disabled
                     >
                       <option value="true">True</option>
                       <option value="false">False</option>
                     </select>
                   </div>
                 </div>
-                <div id="alertClassInfo"></div>
+                <div id="alertClassAdd"></div>
               </div>
             </div>
 
             <div class="d-flex justify-content-center">
               <button
-                id="classUpdateButton"
-                class="btn btn-primary mb-4 d-none"
+                id="classAddButton"
+                class="btn btn-primary mb-4"
                 type="submit"
-                onclick="updateClassInfo()"
+                onclick="addClass()"
               >
-                Update Classroom
-              </button>
-              <button
-                id="classDeleteButton"
-                class="btn btn-danger ml-3 mb-4 d-none"
-                type="submit"
-                onclick="deleteClass()"
-              >
-                Delete Classroom
+                Add Classroom
               </button>
             </div>
             <!-- Class Details End -->
-            <!-- <div class="card shadow mb-4">
-
-              
-            </div> -->
-            <!-- Contest details start -->
-            <div class="card shadow mb-4">
-              <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              >
-                <h6 class="m-0 font-weight-bold text-primary text-center">
-                  Contest List
-                </h6>
-                <div id="addNewPop" class="d-none">
-                  <a
-                    href="#addContest"
-                    class="collapsed"
-                    data-toggle="collapse"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="addContest"
-                  >
-                    <h6 class="m-0 font-weight-bold text-primary">Add New</h6>
-                  </a>
-                </div>
-              </div>
-              <div class="collapse" id="addContest">
-                <div class="card-body">
-                  <div class="card mb-4 p-3 border-bottom-primary">
-                    <div class="row mb-2">
-                      <label
-                        for="contestNameNew"
-                        class="col-5 font-weight-bold col-form-label"
-                        >Contest Title:</label
-                      >
-                      <div class="col-5">
-                        <input
-                          type="text"
-                          id="contestNameNew"
-                          class="form-control"
-                          placeholder="Enter Contest Title..."
-                        />
-                      </div>
-                    </div>
-                    <div class="row mb-2">
-                      <label
-                        for="contestIdNew"
-                        class="col-5 font-weight-bold col-form-label"
-                        >Contest ID:</label
-                      >
-                      <div class="col-5">
-                        <input
-                          type="number"
-                          id="contestIdNew"
-                          class="form-control"
-                          placeholder="Enter Contest ID..."
-                        />
-                      </div>
-                    </div>
-                    <div class="row mb-2">
-                      <label
-                        for="contestProblemsNew"
-                        class="col-5 font-weight-bold col-form-label"
-                        >Total Problems:</label
-                      >
-                      <div class="col-5">
-                        <input
-                          type="number"
-                          id="contestProblemsNew"
-                          class="form-control"
-                          placeholder="Number of Problems..."
-                        />
-                      </div>
-                    </div>
-                    <div class="row mb-2">
-                      <label
-                        for="minRequiredNew"
-                        class="col-5 font-weight-bold col-form-label"
-                        >Minimum Solve Required:</label
-                      >
-                      <div class="col-5">
-                        <input
-                          type="number"
-                          id="minRequiredNew"
-                          class="form-control"
-                          placeholder="Minimum Number of Problems Required to Solve..."
-                        />
-                      </div>
-                    </div>
-                    <div id="alertNewContest"></div>
-                    <div class="mt-4 d-flex justify-content-center">
-                      <button
-                        id="addNewContest"
-                        class="btn btn-primary mb-4"
-                        type="submit"
-                        onclick="addNewContest()"
-                      >
-                        Add New Contest
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="contestBody" class="card-body">
-                <!-- <div class="card mb-4 p-3 border-bottom-primary">
-                  <div class="row mb-2">
-                    <label
-                      for="contestName"
-                      class="col-5 font-weight-bold col-form-label"
-                      >Contest Title:</label
-                    >
-                    <div class="col-5">
-                      <input
-                        type="text"
-                        id="contestName"
-                        class="form-control-plaintext"
-                        value="1234567"
-                      />
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <label
-                      for="contestId"
-                      class="col-5 font-weight-bold col-form-label"
-                      >Contest ID:</label
-                    >
-                    <div class="col-5 font-weight-bold">
-                      <input
-                        type="text"
-                        id="contestId"
-                        class="form-control-plaintext"
-                        value="1234567"
-                      />
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <label
-                      for="minRequired"
-                      class="col-5 font-weight-bold col-form-label"
-                      >Contest Type:</label
-                    >
-                    <div class="col-3 font-weight-bold">
-                      <select
-                        class="form-control-plaintext"
-                        id="typeOfContest"
-                        disabled
-                      >
-                        <option value="long">Long</option>
-                        <option value="short">Short</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <label
-                      for="totalProblems"
-                      class="col-5 font-weight-bold col-form-label"
-                      >Total Problems:</label
-                    >
-                    <div class="col-5 font-weight-bold">
-                      <input
-                        type="text"
-                        id="totalProblems"
-                        class="form-control-plaintext"
-                        value="1234567"
-                      />
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <label
-                      for="minRequired"
-                      class="col-5 font-weight-bold col-form-label"
-                      >Minimum Solve Required:</label
-                    >
-                    <div class="col-5 font-weight-bold">
-                      <input
-                        type="text"
-                        id="minRequired"
-                        class="form-control-plaintext"
-                        value="1234567"
-                      />
-                    </div>
-                  </div>
-                </div> -->
-              </div>
-              <div id="alertContestInfo" class="mx-4"></div>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-center">
-            <button
-              id="contestUpdateButton"
-              class="btn btn-primary mb-4 d-none"
-              type="submit"
-              onclick="updateContestInfo()"
-            >
-              Update Contest Details
-            </button>
-          </div>
-          <!-- Contest details end -->
         </div>
         <!-- Main Content Ends -->
 
@@ -805,7 +607,7 @@
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
     <script src="js/classroom.js"></script>
-    <script src="js/classroomMain.js"></script>
+    <script src="js/addClass.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
