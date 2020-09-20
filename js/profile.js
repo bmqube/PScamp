@@ -97,7 +97,7 @@ function updatePersonalInfo() {
     elem.appendChild(alert);
   } else {
     fetch(linkProfile, {
-      method: "POST",
+      method: "PUT",
       headers: {
         Authorization: "Bearer " + window.localStorage.getItem("access_token"),
         "Content-Type": "application/json",
@@ -127,7 +127,7 @@ function updatePersonalInfo() {
 function updateOJInfo() {
   const elem = document.getElementById("OJUpdateAlert");
   fetch(linkProfile, {
-    method: "POST",
+    method: "PUT",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
       "Content-Type": "application/json",
