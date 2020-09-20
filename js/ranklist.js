@@ -51,6 +51,10 @@ function updateRankInfo() {
   })
     .then((res) => res.json())
     .then((data) => {
+      if (data["msg"] == "Token has expired") {
+        window.localStorage.removeItem("access_token");
+        window.location.href = "/login.html";
+      }
       const spinner = document.getElementById("spinner");
       if (!spinner.classList.contains("d-none")) {
         spinner.classList.add("d-none");

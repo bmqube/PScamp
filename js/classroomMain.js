@@ -225,6 +225,10 @@ fetch(linkClass, {
 })
   .then((res) => res.json())
   .then((data) => {
+    if (data["msg"] == "Token has expired") {
+      window.localStorage.removeItem("access_token");
+      window.location.href = "/login.html";
+    }
     if (data["edit_access"]) {
       edit_access = true;
     }
@@ -332,6 +336,10 @@ function updateClassInfo() {
   })
     .then((res) => res.json())
     .then((data) => {
+      if (data["msg"] == "Token has expired") {
+        window.localStorage.removeItem("access_token");
+        window.location.href = "/login.html";
+      }
       const alertClassInfo = document.getElementById("alertClassInfo");
       if (data["message"] == "data updated") {
         const alert = getAlertElement(data["message"], "alert-success");
@@ -367,6 +375,10 @@ function deleteClass() {
   })
     .then((res) => res.json())
     .then((data) => {
+      if (data["msg"] == "Token has expired") {
+        window.localStorage.removeItem("access_token");
+        window.location.href = "/login.html";
+      }
       const alertClassInfo = document.getElementById("alertClassInfo");
       if (data["message"] == "classroom deleted") {
         const alert = getAlertElement(data["message"], "alert-success");
@@ -413,6 +425,10 @@ function updateContestInfo() {
   })
     .then((res) => res.json())
     .then((data) => {
+      if (data["msg"] == "Token has expired") {
+        window.localStorage.removeItem("access_token");
+        window.location.href = "/login.html";
+      }
       const alertContestInfo = document.getElementById("alertContestInfo");
       if (data["message"] == "data updated") {
         const alert = getAlertElement(data["message"], "alert-success");

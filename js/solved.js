@@ -10,19 +10,19 @@ fetch(linkSolved, {
 })
   .then((res) => res.json())
   .then((data) => {
+    console.log(data);
     const spinnerSolved = document.getElementById("spinnerSolved");
     if (!spinnerSolved.classList.contains("d-none")) {
       spinnerSolved.classList.add("d-none");
     }
     const oj_info = data["oj_info"];
-    console.log(oj_info);
+    // console.log(oj_info);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
-      window.localStorage.removeItem("refresh_token");
       window.location.href = "/login.html";
     }
     for (const oj in oj_info) {
-      if (oj_info.hasOwnProperty(oj) && oj != "VJudge") {
+      if (oj_info[oj]["solve_list"]) {
         const solvedList = oj_info[oj]["solve_list"];
 
         // OJ Title Starts

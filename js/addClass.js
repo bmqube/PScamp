@@ -29,6 +29,10 @@ function addClass() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data["msg"] == "Token has expired") {
+          window.localStorage.removeItem("access_token");
+          window.location.href = "/login.html";
+        }
         if (data["message"] == "Classroom created successfully.") {
           const alert = getAlertElement(data["message"], "alert-success");
           alertClassAdd.appendChild(alert);

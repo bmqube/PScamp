@@ -110,6 +110,10 @@ function updatePersonalInfo() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data["msg"] == "Token has expired") {
+          window.localStorage.removeItem("access_token");
+          window.location.href = "/login.html";
+        }
         if (data["message"] == "data updated") {
           const alert = getAlertElement("Profile Updated", "alert-success");
           elem.appendChild(alert);
@@ -148,6 +152,10 @@ function updateOJInfo() {
   })
     .then((res) => res.json())
     .then((data) => {
+      if (data["msg"] == "Token has expired") {
+        window.localStorage.removeItem("access_token");
+        window.location.href = "/login.html";
+      }
       if (data["message"] == "data updated") {
         const alert = getAlertElement("Profile Updated", "alert-success");
         elem.appendChild(alert);

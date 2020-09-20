@@ -28,6 +28,10 @@ function addList() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data["msg"] == "Token has expired") {
+          window.localStorage.removeItem("access_token");
+          window.location.href = "/login.html";
+        }
         if (
           !document
             .getElementById("spinnerClassInfo")
