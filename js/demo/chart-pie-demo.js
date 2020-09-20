@@ -1,4 +1,3 @@
-import { url } from "../server.js";
 import { colorArray } from "../color.js";
 const link = url + "/vjudge/bmqube";
 
