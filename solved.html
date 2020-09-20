@@ -12,6 +12,7 @@
 
     <title>OJscrapper - Solve Details</title>
 
+    <script src="js/server.js"></script>
     <script src="js/app.js"></script>
     <!-- Custom fonts for this template-->
     <link
@@ -73,6 +74,12 @@
           >
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="users.html">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Users</span></a
+          >
+        </li>
+        <li class="nav-item">
           <a
             class="nav-link collapsed"
             href="#"
@@ -98,6 +105,7 @@
           </div>
         </li>
         <!-- Nav Item - Utilities Collapse Menu -->
+        
         <li class="nav-item">
           <a
             class="nav-link collapsed"
@@ -471,6 +479,11 @@
           <!-- End of Topbar -->
 
         <!-- Main Content Starts -->
+        <div id="spinnerSolved" class="text-center mb-4">
+          <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
     <div id="ojList" class="container-fluid">
         
     </div>

@@ -15,9 +15,13 @@ const contestBody = document.getElementById("contestBody");
 const classUpdateButton = document.getElementById("classUpdateButton");
 const contestUpdateButton = document.getElementById("contestUpdateButton");
 
+const userTablesBody = document.getElementById("userTablesBody");
+const userTablesHead = document.getElementById("userTablesHead");
+
 let edit_access = false,
   len = 0,
-  toBeDeleted = [];
+  toBeDeleted = [],
+  userList;
 
 function getAlertElement(msg, cls) {
   const alert = document.createElement("div");
@@ -224,6 +228,7 @@ fetch(linkClass, {
     if (data["edit_access"]) {
       edit_access = true;
     }
+
     const element = data["classroom_list"];
     console.log(element);
 
@@ -232,7 +237,42 @@ fetch(linkClass, {
     for (let i = 0; i < element.length; i++) {
       const elem = element[i];
 
+      if (edit_access) {
+        const th = document.createElement("th");
+        th.innerText = "Actions";
+
+        userTablesHead.appendChild(th);
+      }
+
       if (elem["classroom_name"] == classname) {
+        userList = elem["user_list"];
+        console.log(userList);
+
+        for (let i = 0; i < userList.length; i++) {
+          const username = userList[i];
+
+          const tr = document.createElement("tr");
+          const th = document.createElement("th");
+          th.setAttribute("scope", "row");
+          th.innerText = i + 1;
+
+          const td = document.createElement("td");
+          td.innerText = username;
+
+          tr.appendChild(th);
+          tr.appendChild(td);
+
+          if (edit_access) {
+            const td = document.createElement("th");
+            const deleteUserButton = deleteButton(`deleteUser("${username}")`);
+            td.appendChild(deleteUserButton);
+
+            tr.appendChild(td);
+          }
+
+          userTablesBody.appendChild(tr);
+        }
+
         classFound = true;
         const contestList = elem["vjudge_contest_list"];
         len = contestList.length;
@@ -245,6 +285,7 @@ fetch(linkClass, {
           const buttonRated = editButton(`edit("is_rated")`);
 
           document.getElementById("addNewPop").classList.remove("d-none");
+          document.getElementById("addNewUser").classList.remove("d-none");
           document
             .getElementById("classDeleteButton")
             .classList.remove("d-none");
@@ -267,6 +308,14 @@ fetch(linkClass, {
     }
   });
 
+function deleteUser(id) {
+  const index = userList.indexOf(id);
+  if (index >= 0) {
+    userList.splice(index, 1);
+  }
+  updateClassInfo();
+}
+
 function updateClassInfo() {
   fetch(linkClass, {
     method: "PUT",
@@ -278,6 +327,7 @@ function updateClassInfo() {
       classroom_name: classname,
       is_rated: isRated.value,
       is_bootcamp: isBootcamp.value,
+      user_list: userList,
     }),
   })
     .then((res) => res.json())
@@ -294,6 +344,14 @@ function updateClassInfo() {
         alertClassInfo.appendChild(alert);
       }
     });
+}
+
+function addNewUser() {
+  const newUser = document.getElementById("userNameNew").value;
+  if (!userList.includes(newUser)) {
+    userList.push(newUser);
+    updateClassInfo();
+  }
 }
 
 function deleteClass() {
@@ -327,6 +385,7 @@ function updateContestInfo() {
   const postData = {
     classroom_name: classname,
     vjudge_contest_list: [],
+    user_list: userList,
   };
   for (let i = 0; i < len; i++) {
     if (!toBeDeleted.includes(i)) {

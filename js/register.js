@@ -2,7 +2,6 @@ if (window.localStorage.getItem("access_token")) {
   window.location.replace("/index.html");
 }
 
-const url = "http://127.0.0.1:5000/";
 const link = url + "register";
 
 const form = document.getElementById("form");

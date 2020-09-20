@@ -12,6 +12,7 @@
 
     <title>OJscrapper - Dashboard</title>
 
+    <script src="js/server.js"></script>
     <script src="js/app.js"></script>
     <!-- Custom fonts for this template-->
     <link
@@ -52,7 +53,7 @@
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a
@@ -70,6 +71,12 @@
           <a class="nav-link" href="solved.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Solve Details</span></a
+          >
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="users.html">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Users</span></a
           >
         </li>
         <li class="nav-item">
@@ -99,6 +106,7 @@
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
+        
         <li class="nav-item">
           <a
             class="nav-link collapsed"
@@ -472,7 +480,33 @@
           <!-- End of Topbar -->
 
         <!-- Main Content Starts -->
-    <div id="param"></div>
+        <div class="container-fluid">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr id="usersHead">
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Total Solve</th>
+                  </tr>
+                </thead>
+                <tbody id="users">
+                  
+                </tbody>
+                
+              </table>
+              <div id="spinnerUsers" class="text-center m-4">
+                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <!-- Main Content Ends -->
 
         <!-- Footer -->
@@ -537,6 +571,7 @@
 
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
+    <script src="js/classroom.js"></script>
     <script src="js/users.js"></script>
     <!-- <script src="js/solved.js"></script> -->
 

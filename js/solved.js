@@ -1,9 +1,8 @@
-const url2 = "http://127.0.0.1:5000/";
-const link2 = url2 + "userinfo";
+const linkSolved = url + "user";
 
 const ojList = document.getElementById("ojList");
 
-fetch(link2, {
+fetch(linkSolved, {
   method: "GET",
   headers: {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
@@ -11,6 +10,10 @@ fetch(link2, {
 })
   .then((res) => res.json())
   .then((data) => {
+    const spinnerSolved = document.getElementById("spinnerSolved");
+    if (!spinnerSolved.classList.contains("d-none")) {
+      spinnerSolved.classList.add("d-none");
+    }
     const oj_info = data["oj_info"];
     console.log(oj_info);
     if (data["msg"] == "Token has expired") {

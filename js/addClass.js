@@ -24,6 +24,7 @@ function addClass() {
         classroom_name: className.value,
         is_rated: isRated.value,
         is_bootcamp: isBootcamp.value,
+        user_list: {},
       }),
     })
       .then((res) => res.json())

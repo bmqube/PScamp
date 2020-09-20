@@ -8,8 +8,7 @@ const cf = document.getElementById("cf");
 const vjudge = document.getElementById("vjudge");
 const loj = document.getElementById("loj");
 
-const url2 = "http://127.0.0.1:5000/";
-const link2 = url2 + "userinfo";
+const linkProfile = url + "user";
 
 function checkEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -46,7 +45,7 @@ function checkLength(input, min, max) {
   return false;
 }
 
-fetch(link2, {
+fetch(linkProfile, {
   method: "GET",
   headers: {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
@@ -54,10 +53,9 @@ fetch(link2, {
 })
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
-      window.localStorage.removeItem("refresh_token");
       window.location.href = "/login.html";
     }
     if (data["first_name"]) {
@@ -98,7 +96,7 @@ function updatePersonalInfo() {
     const alert = getAlertElement("Invalid Email", "alert-danger");
     elem.appendChild(alert);
   } else {
-    fetch(link2, {
+    fetch(linkProfile, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + window.localStorage.getItem("access_token"),
@@ -128,7 +126,7 @@ function updatePersonalInfo() {
 
 function updateOJInfo() {
   const elem = document.getElementById("OJUpdateAlert");
-  fetch(link2, {
+  fetch(linkProfile, {
     method: "POST",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
