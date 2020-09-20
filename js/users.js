@@ -28,7 +28,10 @@ fetch(linkUser, {
       th.innerText = i + 1;
 
       const username = document.createElement("td");
-      username.innerText = user["username"];
+      const a = document.createElement("a");
+      a.href = `dashboard.html?user=${user["username"]}`;
+      a.innerText = user["username"];
+      username.appendChild(a);
 
       const totalSolve = document.createElement("td");
 

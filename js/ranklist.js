@@ -28,7 +28,7 @@ function updateRankInfo() {
   );
   const timeStampFrom = newDateFrom.getTime();
 
-  const dateToArray = dateFrom.value.split("/");
+  const dateToArray = dateTo.value.split("/");
   const newDateTo = new Date(
     dateToArray[2],
     dateToArray[1] - 1,
@@ -55,11 +55,15 @@ function updateRankInfo() {
         window.localStorage.removeItem("access_token");
         window.location.href = "/login.html";
       }
+      console.log(contestType.value);
+
       const spinner = document.getElementById("spinner");
       if (!spinner.classList.contains("d-none")) {
         spinner.classList.add("d-none");
       }
 
+      const table = $("#dataTable").DataTable();
+      table.destroy();
       dataTable.innerHTML = "";
       const thead = document.createElement("thead");
       const tr = document.createElement("tr");
@@ -101,4 +105,66 @@ function updateRankInfo() {
     });
 }
 
-updateRankInfo();
+fetch(linkRank, {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    classroom_name: classname,
+    contest_type: contestType.value,
+    start_time: 0,
+    end_time: 1000000000000000000000000000000,
+  }),
+})
+  .then((res) => res.json())
+  .then((data) => {
+    if (data["msg"] == "Token has expired") {
+      window.localStorage.removeItem("access_token");
+      window.location.href = "/login.html";
+    }
+    const spinner = document.getElementById("spinner");
+    if (!spinner.classList.contains("d-none")) {
+      spinner.classList.add("d-none");
+    }
+
+    dataTable.innerHTML = "";
+    const thead = document.createElement("thead");
+    const tr = document.createElement("tr");
+
+    len = data[0].length;
+    for (let i = 0; i < data[0].length; i++) {
+      const element = data[0][i];
+
+      const th = document.createElement("th");
+      th.innerText = element;
+
+      tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+
+    const tBody = document.createElement("tbody");
+    for (let i = 1; i < data.length; i++) {
+      const trBody = document.createElement("tr");
+      for (let j = 0; j < data[i].length; j++) {
+        const element = data[i][j];
+
+        const td = document.createElement("td");
+        td.innerText = element;
+
+        trBody.appendChild(td);
+      }
+      tBody.appendChild(trBody);
+    }
+
+    dataTable.appendChild(thead);
+    dataTable.appendChild(tBody);
+
+    // Data Table
+    $(document).ready(function () {
+      $("#dataTable").DataTable({
+        order: [[len - 1, "desc"]],
+      });
+    });
+  });
