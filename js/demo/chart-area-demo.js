@@ -7,6 +7,8 @@ const solvedLastMonth = document.getElementById("solvedLastMonth");
 const solvedTotal = document.getElementById("solvedTotal");
 
 const contestDetails = document.getElementById("contestDetails");
+const tasksPercentage = document.getElementById("tasksPercentage");
+const tasksProgress = document.getElementById("tasksProgress");
 
 const currentLocation = window.location.href;
 const currentURL = new URL(currentLocation);
@@ -19,9 +21,9 @@ if (userName) {
 }
 
 // Set new default font family and font color to mimic Bootstrap's default styling
-// (Chart.defaults.global.defaultFontFamily = "Nunito"),
-//   '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-// Chart.defaults.global.defaultFontColor = "#858796";
+(Chart.defaults.global.defaultFontFamily = "Nunito"),
+  '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = "#858796";
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
@@ -64,15 +66,55 @@ fetch(linkDashboard, {
     dashboardText.innerText = `${
       data["username"].charAt(0).toUpperCase() + data["username"].slice(1)
     }'s Dashboard`;
-    let len = data["last_30_days_solve"][1].length;
+    let len = data["last_30_days_solve"][1].length,
+      userSolved = 0,
+      minSolved = 0;
     solvedToday.innerText = data["last_day_solve"];
     solvedLastMonth.innerText =
       data["last_30_days_solve"][1][0] - data["last_30_days_solve"][1][len - 1];
     solvedTotal.innerText = data["last_30_days_solve"][1][0];
 
+    // To Do
+    const todoList = document.getElementById("todo");
+    for (let i = 0; i < data["todo_list"].length; i++) {
+      const todo = data["todo_list"][i];
+      todoList.innerHTML += `<div class="d-flex align-items-center mb-4">
+      <div class="mr-3">
+        <div class="icon-circle bg-warning">
+          <i class="fas fa-exclamation-triangle text-white"></i>
+        </div>
+      </div>
+      <div>
+        ${todo}
+      </div>
+    </div>`;
+    }
+
+    // Announcements
+    const announcements = document.getElementById("announcements");
+    for (let i = 0; i < data["announcement_list"].length; i++) {
+      const announcement = data["announcement_list"][i];
+      announcements.innerHTML += `<div class="d-flex align-items-center mb-4">
+      <div class="mr-3">
+        <div class="icon-circle bg-primary">
+          <i class="fas fa-file-alt text-white"></i>
+        </div>
+      </div>
+      <div>
+        ${announcement}
+      </div>
+    </div>`;
+    }
+
     // Progress Bar
     for (let i = 0; i < data["long_contests"].length; i++) {
       const contest = data["long_contests"][i];
+
+      userSolved += Math.min(
+        contest["solved_problems"],
+        contest["minimum_solve_required"]
+      );
+      minSolved += contest["minimum_solve_required"];
 
       const solvePercentage = Math.round(
         (contest["solved_problems"] / contest["total_problems"]) * 100
@@ -106,11 +148,112 @@ fetch(linkDashboard, {
       }
       body.appendChild(progress);
 
+      const totalProblem = document.createElement("small");
+      totalProblem.innerText = `Total: ${contest["total_problems"]}`;
+
+      const solvedProblem = document.createElement("small");
+      solvedProblem.innerText = `Solved: ${contest["solved_problems"]}`;
+
+      const minRequired = document.createElement("small");
+      minRequired.innerText = `Required: ${contest["minimum_solve_required"]}`;
+
+      const contestInfo = document.createElement("div");
+      contestInfo.setAttribute("class", "d-flex justify-content-between");
+      contestInfo.appendChild(totalProblem);
+      contestInfo.appendChild(solvedProblem);
+      contestInfo.appendChild(minRequired);
+
       contestDetails.appendChild(title);
+      contestDetails.appendChild(contestInfo);
       contestDetails.appendChild(body);
     }
 
-    // Area Chart Example
+    // Tasks
+    const minPercentage = Math.round((userSolved / minSolved) * 100);
+    tasksPercentage.innerText = `${minPercentage}%`;
+
+    tasksProgress.setAttribute("style", `width: ${minPercentage}%`);
+    tasksProgress.setAttribute("aria-valuenow", minPercentage);
+
+    // Pie Chart
+    const obj = {};
+    for (let i = 0; i < data["last_30_days_solve"][1].length - 1; i++) {
+      const today = data["last_30_days_solve"][1][i];
+      const yesterday = data["last_30_days_solve"][1][i + 1];
+      const solvedToday = today - yesterday;
+      if (solvedToday <= 1) {
+        obj[solvedToday] = obj[solvedToday] ? obj[solvedToday] + 1 : 1;
+      } else if (solvedToday <= 3) {
+        obj[`2-3`] = obj[`2-3`] ? obj[`2-3`] + 1 : 1;
+      } else {
+        obj[`3+`] = obj[`3+`] ? obj[`3+`] + 1 : 1;
+      }
+    }
+
+    let labels = Object.keys(obj),
+      values = [],
+      colorArray = [];
+    labels.sort();
+
+    document.getElementById(
+      "solvePerDayAnalysis"
+    ).innerText += ` ${data["last_30_days_solve"][1].length} Days)`;
+
+    for (let i = 0; i < labels.length; i++) {
+      const element = labels[i];
+      if (element == "0") {
+        colorArray.push("#e74a3b");
+      } else if (element == "1") {
+        colorArray.push("#36b9cc");
+      } else if (element === "2-3") {
+        colorArray.push("#1cc88a");
+      } else {
+        colorArray.push("#4e73df");
+      }
+      values.push(obj[element]);
+    }
+
+    const pieChart = document.getElementById("myPieChart");
+    const myPieChart = new Chart(pieChart, {
+      type: "doughnut",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: values,
+            backgroundColor: colorArray,
+            hoverBackgroundColor: colorArray,
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: "#dddfeb",
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+          mode: "label",
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var indice = tooltipItem.index;
+              return data.datasets[0].data[indice] + " Days";
+            },
+          },
+        },
+        legend: {
+          display: false,
+        },
+        cutoutPercentage: 80,
+      },
+    });
+
+    // Area Chart
     var ctx = document.getElementById("myAreaChart");
     var myLineChart = new Chart(ctx, {
       type: "line",
@@ -155,14 +298,14 @@ fetch(linkDashboard, {
                 drawBorder: false,
               },
               ticks: {
-                maxTicksLimit: 10,
+                maxTicksLimit: 7,
               },
             },
           ],
           yAxes: [
             {
               ticks: {
-                maxTicksLimit: 10,
+                maxTicksLimit: 5,
                 padding: 10,
                 // Include a dollar sign in the ticks
                 callback: function (value, index, values) {

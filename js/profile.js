@@ -7,6 +7,11 @@ const email = document.getElementById("email");
 const cf = document.getElementById("cf");
 const vjudge = document.getElementById("vjudge");
 const loj = document.getElementById("loj");
+const atc = document.getElementById("atc");
+
+const password = document.getElementById("currentPassword");
+const newPassword1 = document.getElementById("newPassword1");
+const newPassword2 = document.getElementById("newPassword2");
 
 const linkProfile = url + "user";
 
@@ -53,7 +58,7 @@ fetch(linkProfile, {
 })
   .then((res) => res.json())
   .then((data) => {
-    // console.log(data);
+    console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
@@ -80,6 +85,9 @@ fetch(linkProfile, {
 
     if (data["oj_info"]["LightOJ"]["username"]) {
       loj.value = data["oj_info"]["LightOJ"]["username"];
+    }
+    if (data["oj_info"]["AtCoder"]["username"]) {
+      atc.value = data["oj_info"]["AtCoder"]["username"];
     }
   });
 
@@ -147,6 +155,9 @@ function updateOJInfo() {
         LightOJ: {
           username: loj.value,
         },
+        AtCoder: {
+          username: atc.value,
+        },
       },
     }),
   })
@@ -201,10 +212,58 @@ function gotoVJudge() {
   }
 }
 
+function gotoAtCoder() {
+  if (atc.value && atc.readOnly) {
+    const url = "https://vjudge.net/user/" + atc.value;
+    const win = window.open(url, "_blank");
+    win.focus();
+  }
+}
+
 function gotoLOJ() {
   if (loj.value && loj.readOnly) {
     const url = "http://lightoj.com/volume_userstat.php?user_id=" + loj.value;
     const win = window.open(url, "_blank");
     win.focus();
   }
+}
+
+function updatePassword() {
+  const elem = document.getElementById("passwordUpdateAlert");
+  if (checkLength(newPassword1, 6, 50)) {
+    const alert = checkLength(newPassword1, 6, 50);
+    console.log(alert);
+    elem.appendChild(alert);
+  } else if (newPassword1.value !== newPassword2.value) {
+    const alert = getAlertElement("Password did not match", "alert-danger");
+    elem.appendChild(alert);
+  } else {
+    fetch(linkProfile, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: newPassword1.value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data["msg"] == "Token has expired") {
+          window.localStorage.removeItem("access_token");
+          window.location.href = "/login.html";
+        }
+        if (data["message"] == "data updated") {
+          const alert = getAlertElement("Password Updated", "alert-success");
+          elem.appendChild(alert);
+        } else {
+          const alert = getAlertElement(data["message"], "alert-danger");
+          elem.appendChild(alert);
+        }
+      });
+  }
+  // setTimeout(() => {
+  //   location.reload();
+  // }, 2000);
 }

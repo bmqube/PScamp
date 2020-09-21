@@ -90,29 +90,40 @@ function makeContest(contest, i) {
   rowId.appendChild(colId);
 
   // Contest Type
-  // const labelType = document.createElement("label");
-  // labelType.setAttribute("for", `contestType${i}`);
-  // labelType.setAttribute(
-  //   "class",
-  //   "col-5 font-weight-bold col-form-label"
-  // );
-  // labelType.innerText = "Contest ID:";
+  const labelType = document.createElement("label");
+  labelType.setAttribute("for", `contestType${i}`);
+  labelType.setAttribute("class", "col-5 font-weight-bold col-form-label");
+  labelType.innerText = "Contest Type:";
 
-  // const inputType = document.createElement("select");
-  // inputType.setAttribute("type", "number");
-  // inputType.setAttribute("id", `contestType${i}`);
-  // inputType.setAttribute("class", "form-control-plaintext");
-  // inputType.setAttribute("value", contest["contest_type"]);
-  // inputType.readOnly = true;
+  const optionType1 = document.createElement("option");
+  optionType1.value = "long";
+  optionType1.innerText = "Long";
 
-  // const colType = document.createElement("div");
-  // colType.classList.add("col-5");
-  // colType.appendChild(inputType);
+  const optionType2 = document.createElement("option");
+  optionType2.value = "weekly";
+  optionType2.innerText = "Weekly";
 
-  // const rowType = document.createElement("div");
-  // rowType.classList.add("row", "mb-2");
-  // rowType.appendChild(labelType);
-  // rowType.appendChild(colType);
+  const optionType3 = document.createElement("option");
+  optionType3.value = "individual";
+  optionType3.innerText = "Individual";
+
+  const inputType = document.createElement("select");
+  inputType.appendChild(optionType1);
+  inputType.appendChild(optionType2);
+  inputType.appendChild(optionType3);
+  inputType.setAttribute("id", `contestType${i}`);
+  inputType.setAttribute("class", "form-control-plaintext");
+  inputType.value = contest["contest_type"];
+  inputType.disabled = true;
+
+  const colType = document.createElement("div");
+  colType.classList.add("col-5");
+  colType.appendChild(inputType);
+
+  const rowType = document.createElement("div");
+  rowType.classList.add("row", "mb-2");
+  rowType.appendChild(labelType);
+  rowType.appendChild(colType);
 
   // Total Problems
   const labelTotalProblems = document.createElement("label");
@@ -169,7 +180,7 @@ function makeContest(contest, i) {
   card.classList.add("card", "mb-4", "p-3", "border-bottom-primary");
   card.appendChild(rowTitle);
   card.appendChild(rowId);
-  // card.appendChild(rowType);
+  card.appendChild(rowType);
   card.appendChild(rowTotalProblems);
   card.appendChild(rowMinRequired);
 
@@ -181,11 +192,13 @@ function addNewContest() {
   const contestId = document.getElementById(`contestIdNew`);
   const totalProb = document.getElementById(`contestProblemsNew`);
   const minRequired = document.getElementById(`minRequiredNew`);
+  const contestType = document.getElementById(`contestTypeNew`);
   if (
     title.value &&
     contestId.value &&
     totalProb.value &&
     minRequired.value &&
+    contestType.value &&
     edit_access
   ) {
     const data = {
@@ -193,6 +206,7 @@ function addNewContest() {
       total_problems: totalProb.value,
       minimum_solve_required: minRequired.value,
       contest_id: contestId.value,
+      contest_type: contestType.value,
     };
 
     const newContest = makeContest(data, len);
@@ -405,11 +419,13 @@ function updateContestInfo() {
       const contestId = document.getElementById(`contestId${i}`);
       const totalProb = document.getElementById(`contestProblems${i}`);
       const minRequired = document.getElementById(`minRequired${i}`);
+      const contestType = document.getElementById(`contestType${i}`);
       const data = {
         contest_title: title.value,
         total_problems: totalProb.value,
         minimum_solve_required: minRequired.value,
         contest_id: contestId.value,
+        contest_type: contestType.value,
       };
       postData["vjudge_contest_list"].push(data);
     }
@@ -448,6 +464,7 @@ function editContest(id) {
   const contestId = document.getElementById(`contestId${id}`);
   const totalProb = document.getElementById(`contestProblems${id}`);
   const minRequired = document.getElementById(`minRequired${id}`);
+  const contestType = document.getElementById(`contestType${id}`);
   if (title.readOnly) {
     title.readOnly = false;
     title.classList.remove("form-control-plaintext");
@@ -456,6 +473,10 @@ function editContest(id) {
     contestId.readOnly = false;
     contestId.classList.remove("form-control-plaintext");
     contestId.classList.add("form-control");
+
+    contestType.disabled = false;
+    contestType.classList.remove("form-control-plaintext");
+    contestType.classList.add("form-control");
 
     totalProb.readOnly = false;
     totalProb.classList.remove("form-control-plaintext");
@@ -472,6 +493,10 @@ function editContest(id) {
     contestId.readOnly = true;
     contestId.classList.remove("form-control");
     contestId.classList.add("form-control-plaintext");
+
+    contestType.disabled = true;
+    contestType.classList.remove("form-control");
+    contestType.classList.add("form-control-plaintext");
 
     totalProb.readOnly = true;
     totalProb.classList.remove("form-control");

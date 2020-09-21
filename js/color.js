@@ -1,4 +1,4 @@
-export const colorArray = [
+const colorArray = [
   "#FF6633",
   "#FFB399",
   "#FF33FF",

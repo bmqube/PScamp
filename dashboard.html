@@ -209,7 +209,9 @@
                         <div
                           id="solvedToday"
                           class="h5 mb-0 font-weight-bold text-gray-800"
-                        ></div>
+                        >
+                          0
+                        </div>
                       </div>
                       <div class="col-auto">
                         <i class="far fa-clock fa-2x text-gray-300"></i>
@@ -233,7 +235,9 @@
                         <div
                           id="solvedLastMonth"
                           class="h5 mb-0 font-weight-bold text-gray-800"
-                        ></div>
+                        >
+                          0
+                        </div>
                       </div>
                       <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -252,23 +256,25 @@
                         <div
                           class="text-xs font-weight-bold text-info text-uppercase mb-1"
                         >
-                          Tasks
+                          Tasks Completed
                         </div>
                         <div class="row no-gutters align-items-center">
                           <div class="col-auto">
                             <div
+                              id="tasksPercentage"
                               class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
                             >
-                              40%
+                              0%
                             </div>
                           </div>
                           <div class="col">
                             <div class="progress progress-sm mr-2">
                               <div
+                                id="tasksProgress"
                                 class="progress-bar bg-info"
                                 role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
+                                style="width: 0%"
+                                aria-valuenow="0"
                                 aria-valuemin="0"
                                 aria-valuemax="100"
                               ></div>
@@ -300,7 +306,9 @@
                         <div
                           id="solvedTotal"
                           class="h5 mb-0 font-weight-bold text-gray-800"
-                        ></div>
+                        >
+                          0
+                        </div>
                       </div>
                       <div class="col-auto">
                         <i class="fa fa-check-square fa-2x text-gray-300"></i>
@@ -322,7 +330,7 @@
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                   >
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Solve Details
+                      Total Solve Chart (Last 30 Days)
                     </h6>
                     <!-- <div class="dropdown no-arrow">
                       <a
@@ -368,10 +376,13 @@
                   <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                   >
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Solved Problems
+                    <h6
+                      id="solvePerDayAnalysis"
+                      class="m-0 font-weight-bold text-primary"
+                    >
+                      Solve Per Day Analysis (Last
                     </h6>
-                    <div class="dropdown no-arrow">
+                    <!-- <div class="dropdown no-arrow">
                       <a
                         class="dropdown-toggle"
                         href="#"
@@ -397,25 +408,76 @@
                           >Something else here</a
                         >
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
                     <div class="chart-pie pt-4 pb-2">
                       <canvas id="myPieChart"></canvas>
                     </div>
-                    <div id="ojnames" class="mt-4 text-center small">
-                      <!-- <span class="mr-2">
-                        <i class="dot" style="background-color: #000"></i>
-                        Direct
+                    <div id="solveCountsPerDay" class="mt-4 text-center small">
+                      <span class="mr-2">
+                        <i class="fas fa-circle text-danger"></i> Zero
                       </span>
                       <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
+                        <i class="fas fa-circle text-info"></i> One
                       </span>
                       <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
-                      </span> -->
+                        <i class="fas fa-circle text-success"></i> Two-Three
+                      </span>
+                      <span>
+                        <i class="fas fa-circle text-primary"></i> Three+
+                      </span>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">To Do</h6>
+                  </div>
+                  <div id="todo" class="card-body">
+                    <!-- <div class="d-flex align-items-center mb-4">
+                      <div class="mr-3">
+                        <div class="icon-circle bg-warning">
+                          <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                      </div>
+                      <div>
+                        Spending Alert: We've noticed unusually high spending
+                        for your account.
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Approach -->
+              <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Announcements
+                    </h6>
+                  </div>
+                  <div id="announcements" class="card-body">
+                    <!-- <div class="d-flex align-items-center mb-4">
+                      <div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                          <i class="fas fa-file-alt text-white"></i>
+                        </div>
+                      </div>
+                      <div>
+                        <span class="font-weight-bold"
+                          >A new monthly report is ready to download!</span
+                        >
+                      </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -424,7 +486,7 @@
             <!-- Content Row -->
             <div class="row">
               <!-- Content Column -->
-              <div class="col-lg-6 mb-4">
+              <div class="col-12 mb-4">
                 <!-- Project Card Example -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
@@ -435,7 +497,7 @@
                   <div id="contestDetails" class="card-body"></div>
                 </div>
 
-                <!-- Color System -->
+                <!-- Color System
                 <div class="row">
                   <div class="col-lg-6 mb-4">
                     <div class="card bg-primary text-white shadow">
@@ -501,64 +563,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mb-4">
-                <!-- Illustrations -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Illustrations
-                    </h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="text-center">
-                      <img
-                        class="img-fluid px-3 px-sm-4 mt-3 mb-4"
-                        style="width: 25rem"
-                        src="img/undraw_posting_photo.svg"
-                        alt=""
-                      />
-                    </div>
-                    <p>
-                      Add some quality, svg illustrations to your project
-                      courtesy of
-                      <a
-                        target="_blank"
-                        rel="nofollow"
-                        href="https://undraw.co/"
-                        >unDraw</a
-                      >, a constantly updated collection of beautiful svg images
-                      that you can use completely free and without attribution!
-                    </p>
-                    <a target="_blank" rel="nofollow" href="https://undraw.co/"
-                      >Browse Illustrations on unDraw &rarr;</a
-                    >
-                  </div>
-                </div>
-
-                <!-- Approach -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Development Approach
-                    </h6>
-                  </div>
-                  <div class="card-body">
-                    <p>
-                      SB Admin 2 makes extensive use of Bootstrap 4 utility
-                      classes in order to reduce CSS bloat and poor page
-                      performance. Custom CSS classes are used to create custom
-                      components and custom utility classes.
-                    </p>
-                    <p class="mb-0">
-                      Before working with this theme, you should become familiar
-                      with the Bootstrap framework, especially the utility
-                      classes.
-                    </p>
-                  </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

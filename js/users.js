@@ -1,6 +1,14 @@
 const linkUser = url + "user";
 const users = document.getElementById("users");
 const usersHead = document.getElementById("usersHead");
+const userDeleteAlert = document.getElementById("userDeleteAlert");
+
+function getAlertElement(msg, cls) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert", cls);
+  alert.innerText = msg;
+  return alert;
+}
 
 fetch(linkUser, {
   method: "POST",
@@ -12,17 +20,22 @@ fetch(linkUser, {
 })
   .then((res) => res.json())
   .then((data) => {
-    // console.log(data);
+    console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
     }
+
+    if (data["delete_access"]) {
+      usersHead.innerHTML += `<th scope="col">Actions</th>`;
+    }
+
     const spinnerUsers = document.getElementById("spinnerUsers");
     if (!spinnerUsers.classList.contains("d-none")) {
       spinnerUsers.classList.add("d-none");
     }
-    for (let i = 0; i < data.length; i++) {
-      const user = data[i];
+    for (let i = 0; i < data["user_list"].length; i++) {
+      const user = data["user_list"][i];
 
       const th = document.createElement("th");
       th.innerText = i + 1;
@@ -49,11 +62,39 @@ fetch(linkUser, {
       tr.appendChild(username);
       tr.appendChild(totalSolve);
 
+      if (data["delete_access"]) {
+        const delButton = document.createElement("td");
+        const button = deleteButton(`deleteUser("${user["username"]}")`);
+        delButton.appendChild(button);
+        tr.appendChild(delButton);
+      }
+
       users.appendChild(tr);
     }
   });
 
-function deleteUser(id) {}
+function deleteUser(id) {
+  const linkDeleteUser = url + "user";
+  fetch(linkDeleteUser, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const alert = getAlertElement(data["message"], "alert-info");
+      userDeleteAlert.appendChild(alert);
+
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    });
+}
 
 function deleteButton(msg) {
   const button = document.createElement("button");
