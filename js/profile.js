@@ -138,28 +138,46 @@ function updatePersonalInfo() {
 
 function updateOJInfo() {
   const elem = document.getElementById("OJUpdateAlert");
+  const sendData = {
+    oj_info: {
+      CodeForces: {
+        username: null,
+      },
+      VJudge: {
+        username: null,
+      },
+      LightOJ: {
+        username: null,
+      },
+      AtCoder: {
+        username: null,
+      },
+    },
+  };
+
+  if (cf.value) {
+    sendData["oj_info"]["CodeForces"]["username"] = cf.value;
+  }
+
+  if (vjudge.value) {
+    sendData["oj_info"]["VJudge"]["username"] = vjudge.value;
+  }
+
+  if (atc.value) {
+    sendData["oj_info"]["AtCoder"]["username"] = atc.value;
+  }
+
+  if (loj.value) {
+    sendData["oj_info"]["LightOJ"]["username"] = loj.value;
+  }
+
   fetch(linkProfile, {
     method: "PUT",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      oj_info: {
-        CodeForces: {
-          username: cf.value,
-        },
-        VJudge: {
-          username: vjudge.value,
-        },
-        LightOJ: {
-          username: loj.value,
-        },
-        AtCoder: {
-          username: atc.value,
-        },
-      },
-    }),
+    body: JSON.stringify(sendData),
   })
     .then((res) => res.json())
     .then((data) => {
