@@ -214,7 +214,7 @@ function gotoVJudge() {
 
 function gotoAtCoder() {
   if (atc.value && atc.readOnly) {
-    const url = "https://vjudge.net/user/" + atc.value;
+    const url = "https://atcoder.jp/users/" + atc.value;
     const win = window.open(url, "_blank");
     win.focus();
   }

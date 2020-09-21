@@ -171,6 +171,7 @@ fetch(linkDashboard, {
     // Tasks
     const minPercentage = Math.round((userSolved / minSolved) * 100);
     tasksPercentage.innerText = `${minPercentage}%`;
+    console.log(minSolved);
 
     tasksProgress.setAttribute("style", `width: ${minPercentage}%`);
     tasksProgress.setAttribute("aria-valuenow", minPercentage);
