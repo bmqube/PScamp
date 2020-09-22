@@ -47,22 +47,25 @@
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                 </div>
                 <form class="user" id="form">
+                  <!-- onsubmit="register.disabled = true; return true;" -->
                   <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-6 mb-2">
                       <input
                         type="text"
-                        class="form-control form-control-user mb-3"
+                        class="form-control form-control-user mb-5"
                         id="firstName"
                         placeholder="First Name"
                       />
+                      <div id="errorShow"></div>
                     </div>
                     <div class="col-sm-6">
                       <input
                         type="text"
-                        class="form-control form-control-user mb-3"
+                        class="form-control form-control-user mb-5"
                         id="lastName"
                         placeholder="Last Name"
                       />
+                      <div id="errorShow"></div>
                     </div>
                   </div>
                   <div class="form-group">
@@ -96,7 +99,7 @@
                     <div class="col-sm-6">
                       <input
                         type="password"
-                        class="form-control form-control-user"
+                        class="form-control form-control-user mb-5"
                         id="password2"
                         placeholder="Repeat Password"
                       />
@@ -104,8 +107,11 @@
                     </div>
                   </div>
                   <button
+                    id="registerButton"
+                    name="register"
                     type="submit"
                     class="btn btn-primary btn-user btn-block"
+                    onclick="this.disabled=true;this.innerText='Submitting...'; tryRegister(event)"
                   >
                     Register Account
                   </button>

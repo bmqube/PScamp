@@ -49,7 +49,10 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user">
+                    <form
+                      class="user"
+                      onsubmit="login.disabled = true; return true;"
+                    >
                       <div class="form-group">
                         <input
                           type="text"
@@ -80,6 +83,7 @@
                       </div>
                       <div id="invalid"></div>
                       <input
+                        name="login"
                         onclick="tryLogin()"
                         type="button"
                         value="Login"

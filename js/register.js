@@ -84,11 +84,18 @@ function getFieldName(input) {
 }
 
 // Event listeners
-form.addEventListener("submit", function (e) {
+// form.addEventListener("submit", function (e) {
+function tryRegister(e) {
   e.preventDefault();
+  const inputData = [username, email, password, password2, firstname, lastname];
+
+  for (let i = 0; i < inputData.length; i++) {
+    const input = inputData[i];
+    showError(input, "");
+  }
 
   if (
-    checkRequired([username, email, password, password2]) &&
+    checkRequired(inputData) &&
     checkLength(firstname, 3, 50) &&
     checkLength(lastname, 3, 50) &&
     checkLength(username, 3, 50) &&
@@ -134,6 +141,13 @@ form.addEventListener("submit", function (e) {
         } else {
           showError(email, data["message"]);
         }
+        const registerButton = document.getElementById("registerButton");
+        registerButton.disabled = false;
+        registerButton.innerText = "Register Account";
       });
+  } else {
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = false;
+    registerButton.innerText = "Register Account";
   }
-});
+}
