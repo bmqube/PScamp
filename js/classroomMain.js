@@ -1,6 +1,7 @@
 const currentLocation = window.location.href;
 const currentURL = new URL(currentLocation);
 const classname = currentURL.searchParams.get("class");
+const linkUser = url + "user";
 
 if (!classname) {
   window.location.replace("/index.html");
@@ -203,8 +204,8 @@ function addNewContest() {
   ) {
     const data = {
       contest_title: title.value,
-      total_problems: totalProb.value,
-      minimum_solve_required: minRequired.value,
+      total_problems: parseInt(totalProb.value, 10),
+      minimum_solve_required: parseInt(minRequired.value, 10),
       contest_id: contestId.value,
       contest_type: contestType.value,
     };
@@ -248,7 +249,7 @@ fetch(linkClass, {
     }
 
     const element = data["classroom_list"];
-    console.log(element);
+    // console.log(element);
 
     let classFound = false;
 
@@ -264,7 +265,7 @@ fetch(linkClass, {
 
       if (elem["classroom_name"] == classname) {
         userList = elem["user_list"];
-        console.log(userList);
+        // console.log(userList);
 
         for (let i = 0; i < userList.length; i++) {
           const username = userList[i];
@@ -326,6 +327,39 @@ fetch(linkClass, {
     }
   });
 
+fetch(linkUser, {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({}),
+})
+  .then((res) => res.json())
+  .then((data) => {
+    // console.log(data);
+    if (data["msg"] == "Token has expired") {
+      window.localStorage.removeItem("access_token");
+      window.location.href = "/login.html";
+    }
+
+    const users = data["user_list"];
+    const datalist = document.createElement("datalist");
+    datalist.setAttribute("id", "users");
+
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+
+      if (!userList.includes(user)) {
+        const option = document.createElement("option");
+        option.value = user["username"];
+        datalist.appendChild(option);
+      }
+
+      document.getElementById("addNewUser").parentElement.appendChild(datalist);
+    }
+  });
+
 function deleteUser(id) {
   const index = userList.indexOf(id);
   if (index >= 0) {
@@ -373,6 +407,15 @@ function addNewUser() {
   if (!userList.includes(newUser)) {
     userList.push(newUser);
     updateClassInfo();
+  } else {
+    const alert = getAlertElement(
+      "User already exists in this class",
+      "alert-danger"
+    );
+    document.getElementById("alertNewUser").appendChild(alert);
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
   }
 }
 
@@ -422,14 +465,16 @@ function updateContestInfo() {
       const contestType = document.getElementById(`contestType${i}`);
       const data = {
         contest_title: title.value,
-        total_problems: totalProb.value,
-        minimum_solve_required: minRequired.value,
+        total_problems: parseInt(totalProb.value, 10),
+        minimum_solve_required: parseInt(minRequired.value, 10),
         contest_id: contestId.value,
         contest_type: contestType.value,
       };
       postData["vjudge_contest_list"].push(data);
     }
   }
+
+  // console.log(postData);
 
   fetch(linkClass, {
     method: "PUT",
@@ -449,9 +494,9 @@ function updateContestInfo() {
       if (data["message"] == "data updated") {
         const alert = getAlertElement(data["message"], "alert-success");
         alertContestInfo.appendChild(alert);
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //   location.reload();
+        // }, 1000);
       } else {
         const alert = getAlertElement(data["message"], "alert-danger");
         alertContestInfo.appendChild(alert);

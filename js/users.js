@@ -26,9 +26,9 @@ fetch(linkUser, {
       window.location.href = "/login.html";
     }
 
-    if (data["delete_access"]) {
-      usersHead.innerHTML += `<th scope="col">Actions</th>`;
-    }
+    // if (data["delete_access"]) {
+    //   usersHead.innerHTML += `<th scope="col">Actions</th>`;
+    // }
 
     const spinnerUsers = document.getElementById("spinnerUsers");
     if (!spinnerUsers.classList.contains("d-none")) {
@@ -62,12 +62,12 @@ fetch(linkUser, {
       tr.appendChild(username);
       tr.appendChild(totalSolve);
 
-      if (data["delete_access"]) {
-        const delButton = document.createElement("td");
-        const button = deleteButton(`deleteUser("${user["username"]}")`);
-        delButton.appendChild(button);
-        tr.appendChild(delButton);
-      }
+      // if (data["delete_access"]) {
+      //   const delButton = document.createElement("td");
+      //   const button = deleteButton(`deleteUser("${user["username"]}")`);
+      //   delButton.appendChild(button);
+      //   tr.appendChild(delButton);
+      // }
 
       users.appendChild(tr);
     }
