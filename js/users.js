@@ -26,9 +26,9 @@ fetch(linkUser, {
       window.location.href = "/login.html";
     }
 
-    // if (data["delete_access"]) {
-    //   usersHead.innerHTML += `<th scope="col">Actions</th>`;
-    // }
+    if (data["delete_access"]) {
+      usersHead.innerHTML += `<th scope="col">Actions</th>`;
+    }
 
     const spinnerUsers = document.getElementById("spinnerUsers");
     if (!spinnerUsers.classList.contains("d-none")) {
@@ -62,16 +62,38 @@ fetch(linkUser, {
       tr.appendChild(username);
       tr.appendChild(totalSolve);
 
-      // if (data["delete_access"]) {
-      //   const delButton = document.createElement("td");
-      //   const button = deleteButton(`deleteUser("${user["username"]}")`);
-      //   delButton.appendChild(button);
-      //   tr.appendChild(delButton);
-      // }
+      if (data["delete_access"]) {
+        const delButton = document.createElement("td");
+        const button = deleteButton(`deleteModal("${user["username"]}")`);
+        delButton.appendChild(button);
+        tr.appendChild(delButton);
+      }
 
       users.appendChild(tr);
     }
   });
+
+function deleteModal(id) {
+  bootbox.confirm({
+    title: "Wait..",
+    message: `Are you sure? You want to delete <b>${id}</b>'s id?`,
+    buttons: {
+      confirm: {
+        label: "Delete",
+        className: "btn-danger",
+      },
+      cancel: {
+        label: "Close",
+        className: "btn-secondary",
+      },
+    },
+    callback: function (result) {
+      if (result) {
+        deleteUser(id);
+      }
+    },
+  });
+}
 
 function deleteUser(id) {
   const linkDeleteUser = url + "user";

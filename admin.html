@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>PScamp - Users</title>
+    <title>PScamp - Admin Panel</title>
 
     <script src="js/server.js"></script>
     <script src="js/app.js"></script>
@@ -67,13 +67,13 @@
         <div class="sidebar-heading">Interface</div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="solved.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Solve Details</span></a
           >
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="users.html">
             <i class="fas fa-fw fa-user"></i>
             <span>Users</span></a
@@ -183,34 +183,32 @@
           <!-- End of Topbar -->
 
         <!-- Main Content Starts -->
-        <div class="container-fluid">
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
-            </div>
-            <div class="card-body">
-              <div id="userDeleteAlert"></div>
-              <table class="table table-striped">
-                <thead>
-                  <tr id="usersHead">
-                    <th scope="col">#</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Total Solve</th>
-                  </tr>
-                </thead>
-                <tbody id="users">
-                  
-                </tbody>
-                
-              </table>
-              <div id="spinnerUsers" class="text-center m-4">
-                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
-                  <span class="sr-only">Loading...</span>
+    <div id="ojList" class="container-fluid">
+      <div class="mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="font-weight-bold text-lg text-primary text-uppercase mb-1"
+                >
+                  Update Database
                 </div>
+                <h6
+                  id="solvedTotal"
+                  class="mb-0 text-muted text-gray-800"
+                >
+                  Last Updated On
+            </h6>
+              </div>
+              <div class="col-auto">
+                <i style="cursor: pointer;" class="fas fa-sync fa-2x text-gray-300 mr-4" onclick="updateDB()"></i>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
       <!-- Main Content Ends -->
 
         <!-- Footer -->
@@ -275,8 +273,8 @@
 
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
+    <script src="js/admin.js"></script>
     <script src="js/classroom.js"></script>
-    <!-- <script src="js/solved.js"></script> -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -290,7 +288,6 @@
 
     <!-- Page level plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="js/users.js"></script>
     <!-- <script src="vendor/chart.js/Chart.min.js"></script>
 
      Page level custom scripts 

@@ -276,7 +276,12 @@ fetch(linkClass, {
           th.innerText = i + 1;
 
           const td = document.createElement("td");
-          td.innerText = username;
+          const a = document.createElement("a");
+          a.href = `dashboard.html?user=${username}`;
+          a.target = "_blank";
+          a.innerText = username;
+
+          td.appendChild(a);
 
           tr.appendChild(th);
           tr.appendChild(td);
