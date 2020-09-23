@@ -3,6 +3,11 @@
 const userNav = document.getElementById("userNav");
 userNav.innerText = window.localStorage.getItem("username");
 
+const adminNav = document.getElementById("adminNav");
+if (window.localStorage.getItem("is_admin")) {
+  adminNav.className = "dropdown-item";
+}
+
 // fetch(link, {
 //   method: "POST",
 //   headers: {

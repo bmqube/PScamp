@@ -164,6 +164,16 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
+                  <a
+                    id="adminNav"
+                    class="d-none dropdown-item"
+                    href="/admin.html"
+                  >
+                    <i
+                      class="fas fa-user-shield fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Admin Panel
+                  </a>
                   <div class="dropdown-divider"></div>
                   <a
                     class="dropdown-item"
@@ -183,26 +193,76 @@
           <!-- End of Topbar -->
 
         <!-- Main Content Starts -->
-    <div id="ojList" class="container-fluid">
-      <div class="mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div
-                  class="font-weight-bold text-lg text-primary text-uppercase mb-1"
-                >
-                  Update Database
+    <div class="container-fluid">
+      <div class="card shadow mb-4">
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">
+            Database 
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-lg-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="font-weight-bold text-lg text-primary text-uppercase mb-1"
+                      >
+                        Update Database
+                      </div>
+                      <h6
+                        id="nextRunOn"
+                        class="mb-0 text-muted"
+                      >
+                        Next Run On 
+                  </h6>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-link" onclick="updateDB()" data-toggle="tooltip" data-placement="top" title="Sync Now">
+                        <i class="fas fa-sync fa-2x text-gray-300"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <h6
-                  id="solvedTotal"
-                  class="mb-0 text-muted text-gray-800"
-                >
-                  Last Updated On
-            </h6>
               </div>
-              <div class="col-auto">
-                <i style="cursor: pointer;" class="fas fa-sync fa-2x text-gray-300 mr-4" onclick="updateDB()"></i>
+              </div>
+            <div class="col-12 col-lg-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="font-weight-bold text-lg text-success text-uppercase mb-0"
+                      >
+                        Current Interval
+                      </div>
+                      <div class="row mb-0">
+                        <input id="interval" type="text" class="col-2 font-weight-bold form-control-plaintext pl-3" placeholder="0" readonly>
+                        <div class="col-8">
+                          <select class="form-control-plaintext" id="level" disabled>
+                            <option value="days">Days</option>
+                            <option value="hours">Hours</option>
+                            <option value="minutes">Minutes</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-link" onclick="editDB()">
+                        <i class="fas fa-edit fa-2x text-gray-300"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div id="updateBtn" class="d-none">
+                    <div class="d-flex justify-content-center">
+                      <button class="btn btn-success mt-2" type="submit" onclick="updateDB()">Update Interval</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 const linkDashboard = url + "dashboard";
+const linkProfile = url + "user";
 let sendData = {};
 
 const dashboardText = document.getElementById("dashboardText");
@@ -15,15 +16,11 @@ const currentURL = new URL(currentLocation);
 const userName = currentURL.searchParams.get("user");
 const classname = currentURL.searchParams.get("class");
 
-if (userName && classname) {
-  sendData = {
-    classroom_name: classname,
-    username: userName,
-  };
-} else if (userName) {
-  sendData = {
-    username: userName,
-  };
+if (classname) {
+  sendData["classroom_name"] = classname;
+}
+if (userName) {
+  sendData["username"] = userName;
 }
 
 // Set new default font family and font color to mimic Bootstrap's default styling
@@ -55,6 +52,21 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
+
+fetch(linkProfile, {
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+  },
+})
+  .then((res) => res.json())
+  .then((data) => {
+    // console.log(data);
+    if (data["is_admin"]) {
+      window.localStorage.setItem("is_admin", true);
+      adminNav.className = "dropdown-item";
+    }
+  });
 
 fetch(linkDashboard, {
   method: "POST",
