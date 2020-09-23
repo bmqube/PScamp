@@ -86,7 +86,16 @@ function updateRankInfo() {
           const element = data[i][j];
 
           const td = document.createElement("td");
-          td.innerText = element;
+          if (j) {
+            td.innerText = element;
+          } else {
+            const a = document.createElement("a");
+            a.href = `dashboard.html?user=${element}`;
+            a.target = "_blank";
+            a.innerText = element;
+
+            td.appendChild(a);
+          }
 
           trBody.appendChild(td);
         }

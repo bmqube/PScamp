@@ -61,7 +61,7 @@ function makeContest(contest, i) {
     const editContestButton = editButton(`editContest("${i}")`);
     rowTitle.appendChild(editContestButton);
 
-    const deleteContestButton = deleteButton(`deleteContest("${i}")`);
+    const deleteContestButton = deleteButton(`deleteContestModal("${i}")`);
     rowTitle.appendChild(deleteContestButton);
   }
 
@@ -189,6 +189,8 @@ function makeContest(contest, i) {
 }
 
 function addNewContest() {
+  const alertNewContest = document.getElementById("alertNewContest");
+  alertNewContest.innerHTML = "";
   const title = document.getElementById(`contestNameNew`);
   const contestId = document.getElementById(`contestIdNew`);
   const totalProb = document.getElementById(`contestProblemsNew`);
@@ -216,14 +218,12 @@ function addNewContest() {
 
     updateContestInfo();
 
-    const alertNewContest = document.getElementById("alertNewContest");
     const alert = getAlertElement("Contest Added", "alert-success");
     alertNewContest.appendChild(alert);
     setTimeout(() => {
       location.reload();
     }, 1000);
   } else {
-    const alertNewContest = document.getElementById("alertNewContest");
     const alert = getAlertElement(
       "Error, A field can not be empty",
       "alert-danger"
@@ -288,8 +288,10 @@ fetch(linkClass, {
 
           if (edit_access) {
             const td = document.createElement("th");
-            const deleteUserButton = deleteButton(`deleteUser("${username}")`);
-            td.appendChild(deleteUserButton);
+            const deleteModalButton = deleteButton(
+              `deleteModal("${username}")`
+            );
+            td.appendChild(deleteModalButton);
 
             tr.appendChild(td);
           }
@@ -331,6 +333,50 @@ fetch(linkClass, {
       window.location.replace("/index.html");
     }
   });
+
+function deleteModal(id) {
+  bootbox.confirm({
+    title: "Wait..",
+    message: `Are you sure? You want to remove <b>${id}</b> from this class?`,
+    buttons: {
+      confirm: {
+        label: "Remove",
+        className: "btn-danger",
+      },
+      cancel: {
+        label: "Close",
+        className: "btn-secondary",
+      },
+    },
+    callback: function (result) {
+      if (result) {
+        deleteUser(id);
+      }
+    },
+  });
+}
+
+function deleteContestModal(id) {
+  bootbox.confirm({
+    title: "Wait..",
+    message: `Are you sure? You want to remove this contest?`,
+    buttons: {
+      confirm: {
+        label: "Remove",
+        className: "btn-danger",
+      },
+      cancel: {
+        label: "Close",
+        className: "btn-secondary",
+      },
+    },
+    callback: function (result) {
+      if (result) {
+        deleteContest(id);
+      }
+    },
+  });
+}
 
 fetch(linkUser, {
   method: "POST",
@@ -374,6 +420,7 @@ function deleteUser(id) {
 }
 
 function updateClassInfo() {
+  alertClassInfo.innerHTML = "";
   fetch(linkClass, {
     method: "PUT",
     headers: {
@@ -456,6 +503,7 @@ function deleteClass() {
 }
 
 function updateContestInfo() {
+  alertContestInfo.innerHTML = "";
   const postData = {
     classroom_name: classname,
     vjudge_contest_list: [],
@@ -499,9 +547,9 @@ function updateContestInfo() {
       if (data["message"] == "data updated") {
         const alert = getAlertElement(data["message"], "alert-success");
         alertContestInfo.appendChild(alert);
-        // setTimeout(() => {
-        //   location.reload();
-        // }, 1000);
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       } else {
         const alert = getAlertElement(data["message"], "alert-danger");
         alertContestInfo.appendChild(alert);
