@@ -270,7 +270,7 @@
                           id="addNewUser"
                           class="btn btn-primary mb-4"
                           type="submit"
-                          onclick="addNewUser()"
+                          onclick="this.disabled=true;this.innerText='Adding...';addNewUser()"
                         >
                           Add New User
                         </button>
@@ -420,7 +420,7 @@
                         id="addNewContest"
                         class="btn btn-primary mb-4"
                         type="submit"
-                        onclick="addNewContest()"
+                        onclick="this.disabled=true;this.innerText='Adding...'; addNewContest()"
                       >
                         Add New Contest
                       </button>

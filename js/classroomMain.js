@@ -22,7 +22,7 @@ const userTablesHead = document.getElementById("userTablesHead");
 let edit_access = false,
   len = 0,
   toBeDeleted = [],
-  userList;
+  userList = [];
 
 function getAlertElement(msg, cls) {
   const alert = document.createElement("div");
@@ -220,15 +220,15 @@ function addNewContest() {
 
     const alert = getAlertElement("Contest Added", "alert-success");
     alertNewContest.appendChild(alert);
-    setTimeout(() => {
-      location.reload();
-    }, 1000);
   } else {
     const alert = getAlertElement(
       "Error, A field can not be empty",
       "alert-danger"
     );
     alertNewContest.appendChild(alert);
+    const addNewContest = document.getElementById("addNewContest");
+    addNewContest.disabled = false;
+    addNewContest.innerText = "Add New Contest";
   }
 }
 
@@ -256,47 +256,48 @@ fetch(linkClass, {
     for (let i = 0; i < element.length; i++) {
       const elem = element[i];
 
-      if (edit_access) {
-        const th = document.createElement("th");
-        th.innerText = "Actions";
-
-        userTablesHead.appendChild(th);
-      }
-
       if (elem["classroom_name"] == classname) {
-        userList = elem["user_list"];
-        // console.log(userList);
-
-        for (let i = 0; i < userList.length; i++) {
-          const username = userList[i];
-
-          const tr = document.createElement("tr");
+        if (edit_access) {
           const th = document.createElement("th");
-          th.setAttribute("scope", "row");
-          th.innerText = i + 1;
+          th.innerText = "Actions";
 
-          const td = document.createElement("td");
-          const a = document.createElement("a");
-          a.href = `dashboard.html?user=${username}`;
-          a.target = "_blank";
-          a.innerText = username;
+          userTablesHead.appendChild(th);
+        }
+        if (Object.keys(elem["user_list"]).length) {
+          userList = elem["user_list"];
+          // console.log(userList);
 
-          td.appendChild(a);
+          for (let i = 0; i < userList.length; i++) {
+            const username = userList[i];
 
-          tr.appendChild(th);
-          tr.appendChild(td);
+            const tr = document.createElement("tr");
+            const th = document.createElement("th");
+            th.setAttribute("scope", "row");
+            th.innerText = i + 1;
 
-          if (edit_access) {
-            const td = document.createElement("th");
-            const deleteModalButton = deleteButton(
-              `deleteModal("${username}")`
-            );
-            td.appendChild(deleteModalButton);
+            const td = document.createElement("td");
+            const a = document.createElement("a");
+            a.href = `dashboard.html?user=${username}`;
+            a.target = "_blank";
+            a.innerText = username;
 
+            td.appendChild(a);
+
+            tr.appendChild(th);
             tr.appendChild(td);
-          }
 
-          userTablesBody.appendChild(tr);
+            if (edit_access) {
+              const td = document.createElement("th");
+              const deleteModalButton = deleteButton(
+                `deleteModal("${username}")`
+              );
+              td.appendChild(deleteModalButton);
+
+              tr.appendChild(td);
+            }
+
+            userTablesBody.appendChild(tr);
+          }
         }
 
         classFound = true;
@@ -455,19 +456,24 @@ function updateClassInfo() {
 }
 
 function addNewUser() {
+  const alertNewUser = document.getElementById("alertNewUser");
+  alertNewUser.innerHTML = "";
   const newUser = document.getElementById("userNameNew").value;
   if (!userList.includes(newUser)) {
     userList.push(newUser);
     updateClassInfo();
+    const addNewUser = document.getElementById("addNewUser");
+    addNewUser.disabled = false;
+    addNewUser.innerText = "Add New User";
   } else {
     const alert = getAlertElement(
       "User already exists in this class",
       "alert-danger"
     );
-    document.getElementById("alertNewUser").appendChild(alert);
-    setTimeout(() => {
-      location.reload();
-    }, 2000);
+    alertNewUser.appendChild(alert);
+    const addNewUser = document.getElementById("addNewUser");
+    addNewUser.disabled = false;
+    addNewUser.innerText = "Add New User";
   }
 }
 
@@ -553,6 +559,11 @@ function updateContestInfo() {
       } else {
         const alert = getAlertElement(data["message"], "alert-danger");
         alertContestInfo.appendChild(alert);
+      }
+      const addNewContest = document.getElementById("addNewContest");
+      if (addNewContest.disabled) {
+        addNewContest.disabled = false;
+        addNewContest.innerText = "Add New Contest";
       }
     });
 }

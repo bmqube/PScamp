@@ -13,6 +13,7 @@ function getAlertElement(msg, cls) {
 }
 
 function addClass() {
+  alertClassAdd.innerHTML = "";
   if (className.value && isRated.value && isBootcamp.value) {
     fetch(linkCreateClass, {
       method: "POST",
@@ -36,16 +37,21 @@ function addClass() {
         if (data["message"] == "Classroom created successfully.") {
           const alert = getAlertElement(data["message"], "alert-success");
           alertClassAdd.appendChild(alert);
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
         } else {
           const alert = getAlertElement(data["message"], "alert-danger");
           alertClassAdd.appendChild(alert);
         }
+
+        const classAddButton = document.getElementById("classAddButton");
+        classAddButton.disabled = false;
+        classAddButton.innerText = "Add Classroom";
       });
   } else {
-    const alert = getAlertElement("A field can not be empty", "alert-success");
+    const alert = getAlertElement("A field can not be empty", "alert-danger");
     alertClassAdd.appendChild(alert);
+
+    const classAddButton = document.getElementById("classAddButton");
+    classAddButton.disabled = false;
+    classAddButton.innerText = "Add Classroom";
   }
 }
