@@ -58,7 +58,7 @@ fetch(linkProfile, {
 })
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
@@ -95,7 +95,6 @@ function updatePersonalInfo() {
   const elem = document.getElementById("personalUpdateAlert");
   if (checkLength(firstname, 3, 50)) {
     const alert = checkLength(firstname, 3, 50);
-    console.log(alert);
     elem.appendChild(alert);
   } else if (checkLength(lastname, 3, 50)) {
     const alert = checkLength(lastname, 3, 50);
@@ -250,7 +249,6 @@ function updatePassword() {
   const elem = document.getElementById("passwordUpdateAlert");
   if (checkLength(newPassword1, 6, 50)) {
     const alert = checkLength(newPassword1, 6, 50);
-    console.log(alert);
     elem.appendChild(alert);
   } else if (newPassword1.value !== newPassword2.value) {
     const alert = getAlertElement("Password did not match", "alert-danger");

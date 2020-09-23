@@ -31,6 +31,13 @@ function getAlertElement(msg, cls) {
   return alert;
 }
 
+function gotoVJudgeContest(id, input) {
+  const element = document.getElementById(input);
+  if (element.readOnly && element.value) {
+    window.open(`https://vjudge.net/contest/${id}`, "_blank");
+  }
+}
+
 function makeContest(contest, i) {
   // Contest Title
 
@@ -44,9 +51,14 @@ function makeContest(contest, i) {
 
   const inputTitle = document.createElement("input");
   inputTitle.setAttribute("type", "text");
+  inputTitle.setAttribute("style", "cursor:pointer;");
   inputTitle.setAttribute("id", `contestName${i}`);
   inputTitle.setAttribute("class", "form-control-plaintext");
   inputTitle.setAttribute("value", contest["contest_title"]);
+  inputTitle.setAttribute(
+    "onclick",
+    `gotoVJudgeContest("${contest["contest_id"]}", "contestName${i}")`
+  );
   inputTitle.readOnly = true;
 
   const colTitle = document.createElement("div");
@@ -93,7 +105,10 @@ function makeContest(contest, i) {
   // Contest Type
   const labelType = document.createElement("label");
   labelType.setAttribute("for", `contestType${i}`);
-  labelType.setAttribute("class", "col-5 font-weight-bold col-form-label");
+  labelType.setAttribute(
+    "class",
+    "col-4 col-lg-5 font-weight-bold col-form-label"
+  );
   labelType.innerText = "Contest Type:";
 
   const optionType1 = document.createElement("option");
@@ -118,7 +133,7 @@ function makeContest(contest, i) {
   inputType.disabled = true;
 
   const colType = document.createElement("div");
-  colType.classList.add("col-5");
+  colType.classList.add("col-4", "col-lg-5");
   colType.appendChild(inputType);
 
   const rowType = document.createElement("div");
@@ -255,6 +270,7 @@ fetch(linkClass, {
 
     for (let i = 0; i < element.length; i++) {
       const elem = element[i];
+      // console.log(elem);
 
       if (elem["classroom_name"] == classname) {
         if (edit_access) {
@@ -277,7 +293,8 @@ fetch(linkClass, {
 
             const td = document.createElement("td");
             const a = document.createElement("a");
-            a.href = `dashboard.html?user=${username}`;
+            a.href = `dashboard.html?user=${username}&class=${classname}`;
+            a.className = "text-decoration-none";
             a.target = "_blank";
             a.innerText = username;
 
@@ -402,7 +419,7 @@ fetch(linkUser, {
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
 
-      if (!userList.includes(user)) {
+      if (!userList.includes(user["username"])) {
         const option = document.createElement("option");
         option.value = user["username"];
         datalist.appendChild(option);

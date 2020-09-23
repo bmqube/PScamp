@@ -91,6 +91,7 @@ function updateRankInfo() {
           } else {
             const a = document.createElement("a");
             a.href = `dashboard.html?user=${element}`;
+            a.className = "text-decoration-none";
             a.target = "_blank";
             a.innerText = element;
 
@@ -165,6 +166,7 @@ fetch(linkRank, {
         } else {
           const a = document.createElement("a");
           a.href = `dashboard.html?user=${element}`;
+          a.className = "text-decoration-none";
           a.target = "_blank";
           a.innerText = element;
 

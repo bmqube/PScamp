@@ -10,7 +10,7 @@ fetch(linkSolved, {
 })
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     const spinnerSolved = document.getElementById("spinnerSolved");
     if (!spinnerSolved.classList.contains("d-none")) {
       spinnerSolved.classList.add("d-none");

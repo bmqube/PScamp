@@ -13,8 +13,14 @@ const tasksProgress = document.getElementById("tasksProgress");
 const currentLocation = window.location.href;
 const currentURL = new URL(currentLocation);
 const userName = currentURL.searchParams.get("user");
+const classname = currentURL.searchParams.get("class");
 
-if (userName) {
+if (userName && classname) {
+  sendData = {
+    classroom_name: classname,
+    username: userName,
+  };
+} else if (userName) {
   sendData = {
     username: userName,
   };
@@ -126,7 +132,14 @@ fetch(linkDashboard, {
 
       const title = document.createElement("h4");
       title.setAttribute("class", "small font-weight-bold");
-      title.innerText = contest["contest_title"];
+
+      const a = document.createElement("a");
+      a.href = `https://vjudge.net/contest/${contest["contest_id"]}`;
+      a.className = "text-secondary text-decoration-none";
+      a.innerText = contest["contest_title"];
+      a.target = "_blank";
+
+      title.appendChild(a);
       title.appendChild(span);
 
       const body = document.createElement("div");
@@ -171,7 +184,6 @@ fetch(linkDashboard, {
     // Tasks
     const minPercentage = Math.round((userSolved / minSolved) * 100);
     tasksPercentage.innerText = `${minPercentage}%`;
-    console.log(minSolved);
 
     tasksProgress.setAttribute("style", `width: ${minPercentage}%`);
     tasksProgress.setAttribute("aria-valuenow", minPercentage);
