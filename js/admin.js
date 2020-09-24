@@ -6,19 +6,6 @@ const nextRunOn = document.getElementById("nextRunOn");
 const level = document.getElementById("level");
 const interval = document.getElementById("interval");
 
-function syncDB() {
-  fetch(linkSync, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${window.localStorage.getItem("access_token")}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      bootbox.alert(data["message"]);
-    });
-}
-
 fetch(linkProfile, {
   method: "GET",
   headers: {
@@ -63,6 +50,19 @@ fetch(linkUpdateScheduler, {
       level.value = "minutes";
     }
   });
+
+function syncDB() {
+  fetch(linkSync, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem("access_token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      bootbox.alert(data["message"]);
+    });
+}
 
 function editDB() {
   if (interval.classList.contains("form-control-plaintext")) {

@@ -43,6 +43,7 @@ fetch(linkUser, {
       const username = document.createElement("td");
       const a = document.createElement("a");
       a.href = `dashboard.html?user=${user["username"]}`;
+      a.className = "text-decoration-none";
       a.innerText = user["username"];
       username.appendChild(a);
 

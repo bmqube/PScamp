@@ -53,20 +53,24 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-fetch(linkProfile, {
-  method: "GET",
-  headers: {
-    Authorization: "Bearer " + window.localStorage.getItem("access_token"),
-  },
-})
-  .then((res) => res.json())
-  .then((data) => {
-    // console.log(data);
-    if (data["is_admin"]) {
-      window.localStorage.setItem("is_admin", true);
-      adminNav.className = "dropdown-item";
-    }
-  });
+if (!window.localStorage.getItem("is_admin")) {
+  fetch(linkProfile, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data["is_admin"]) {
+        window.localStorage.setItem("is_admin", "yes");
+        adminNav.classList.remove("d-none");
+      } else {
+        window.localStorage.setItem("is_admin", "no");
+      }
+    });
+}
 
 fetch(linkDashboard, {
   method: "POST",

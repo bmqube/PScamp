@@ -4,8 +4,11 @@ const userNav = document.getElementById("userNav");
 userNav.innerText = window.localStorage.getItem("username");
 
 const adminNav = document.getElementById("adminNav");
-if (window.localStorage.getItem("is_admin")) {
-  adminNav.className = "dropdown-item";
+if (
+  window.localStorage.getItem("is_admin") == "yes" &&
+  adminNav.classList.contains("d-none")
+) {
+  adminNav.classList.remove("d-none");
 }
 
 // fetch(link, {
