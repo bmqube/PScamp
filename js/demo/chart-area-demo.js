@@ -53,6 +53,30 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+function addNewAnnouncement() {
+  const announcement = document.getElementById("announcementMessage");
+  console.log(announcement.value);
+
+  setTimeout(() => {
+    const addNewAnnouncementButton = document.getElementById(
+      "addNewAnnouncementButton"
+    );
+    addNewAnnouncementButton.disabled = false;
+    addNewAnnouncementButton.innerText = "Add New Announcement";
+  }, 2000);
+}
+
+function addNewTodo() {
+  const todo = document.getElementById("todoMessage");
+  console.log(todo.value);
+
+  setTimeout(() => {
+    const addNewTodoButton = document.getElementById("addNewTodoButton");
+    addNewTodoButton.disabled = false;
+    addNewTodoButton.innerText = "Add New Todo";
+  }, 2000);
+}
+
 if (!window.localStorage.getItem("is_admin")) {
   fetch(linkProfile, {
     method: "GET",
@@ -70,6 +94,11 @@ if (!window.localStorage.getItem("is_admin")) {
         window.localStorage.setItem("is_admin", "no");
       }
     });
+}
+
+if (window.localStorage.getItem("is_admin") == "yes" && !userName) {
+  document.getElementById("addNewAnnouncement").classList.remove("d-none");
+  document.getElementById("addNewTodo").classList.remove("d-none");
 }
 
 fetch(linkDashboard, {

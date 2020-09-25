@@ -342,33 +342,6 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                       Total Solve Chart (Last 30 Days)
                     </h6>
-                    <!-- <div class="dropdown no-arrow">
-                      <a
-                        class="dropdown-toggle"
-                        href="#"
-                        role="button"
-                        id="dropdownMenuLink"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i
-                          class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
-                        ></i>
-                      </a> -->
-                    <!-- <div
-                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink"
-                      >
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"
-                          >Something else here</a
-                        >
-                      </div> -->
-                    <!-- </div> -->
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
@@ -392,33 +365,6 @@
                     >
                       Solve Per Day Analysis (Last
                     </h6>
-                    <!-- <div class="dropdown no-arrow">
-                      <a
-                        class="dropdown-toggle"
-                        href="#"
-                        role="button"
-                        id="dropdownMenuLink"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i
-                          class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
-                        ></i>
-                      </a>
-                      <div
-                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink"
-                      >
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"
-                          >Something else here</a
-                        >
-                      </div>
-                    </div> -->
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
@@ -446,139 +392,113 @@
 
             <div class="row">
               <div class="col-lg-6 mb-4">
-                <!-- Illustrations -->
+                <!-- Todo -->
                 <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Todo</h6>
-                  </div>
-                  <div id="todo" class="card-body">
-                    <!-- <div class="d-flex align-items-center mb-4">
-                      <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                          <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                      </div>
-                      <div>
-                        Spending Alert: We've noticed unusually high spending
-                        for your account.
-                      </div>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-
-              <!-- Approach -->
-              <div class="col-lg-6">
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Announcements
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary text-center">
+                      Todo
                     </h6>
+                    <div id="addNewTodo" class="d-none">
+                      <a
+                        href="#addTodo"
+                        class="collapsed"
+                        data-toggle="collapse"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="addTodo"
+                      >
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Add New
+                        </h6>
+                      </a>
+                    </div>
                   </div>
-                  <div id="announcements" class="card-body">
-                    <!-- <div class="d-flex align-items-center mb-4">
-                      <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                          <i class="fas fa-file-alt text-white"></i>
+                  <div class="collapse" id="addTodo">
+                    <div class="card-body">
+                      <div class="card mb-4 p-3 border-bottom-primary">
+                        <textarea id="todoMessage" class="form-control" rows="3"></textarea>
+                        <div class="mt-4 d-flex justify-content-center">
+                          <button
+                            id="addNewTodoButton"
+                            class="btn btn-primary mb-4"
+                            type="submit"
+                            onclick="this.disabled=true;this.innerText='Adding...'; addNewTodo()"
+                          >
+                            Add New Todo
+                          </button>
                         </div>
                       </div>
-                      <div>
-                        <span class="font-weight-bold"
-                          >A new monthly report is ready to download!</span
-                        >
-                      </div>
-                    </div> -->
+                    </div>
                   </div>
-                </div>
+                <div id="todo" class="card-body"></div>
               </div>
             </div>
 
-            <!-- Content Row -->
-            <div class="row">
-              <!-- Content Column -->
-              <div class="col-12 mb-4">
-                <!-- Project Card Example -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Contest Details
+            <!-- Announcements -->
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary text-center">
+                      Announcements
                     </h6>
+                    <div id="addNewAnnouncement" class="d-none">
+                      <a
+                        href="#addAnnouncement"
+                        class="collapsed"
+                        data-toggle="collapse"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="addAnnouncement"
+                      >
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Add New
+                        </h6>
+                      </a>
+                    </div>
                   </div>
-                  <div id="contestDetails" class="card-body"></div>
-                </div>
-
-                <!-- Color System
-                <div class="row">
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-primary text-white shadow">
-                      <div class="card-body">
-                        Primary
-                        <div class="text-white-50 small">#4e73df</div>
+                  <div class="collapse" id="addAnnouncement">
+                    <div class="card-body">
+                      <div class="card mb-4 p-3 border-bottom-primary">
+                        <textarea id="announcementMessage" class="form-control" rows="3"></textarea>
+                        <div class="mt-4 d-flex justify-content-center">
+                          <button
+                            id="addNewAnnouncementButton"
+                            class="btn btn-primary mb-4"
+                            type="submit"
+                            onclick="this.disabled=true;this.innerText='Adding...'; addNewAnnouncement()"
+                          >
+                            Add New Announcement
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-success text-white shadow">
-                      <div class="card-body">
-                        Success
-                        <div class="text-white-50 small">#1cc88a</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-info text-white shadow">
-                      <div class="card-body">
-                        Info
-                        <div class="text-white-50 small">#36b9cc</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-warning text-white shadow">
-                      <div class="card-body">
-                        Warning
-                        <div class="text-white-50 small">#f6c23e</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-danger text-white shadow">
-                      <div class="card-body">
-                        Danger
-                        <div class="text-white-50 small">#e74a3b</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-secondary text-white shadow">
-                      <div class="card-body">
-                        Secondary
-                        <div class="text-white-50 small">#858796</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-light text-black shadow">
-                      <div class="card-body">
-                        Light
-                        <div class="text-black-50 small">#f8f9fc</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-4">
-                    <div class="card bg-dark text-white shadow">
-                      <div class="card-body">
-                        Dark
-                        <div class="text-white-50 small">#5a5c69</div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                <div id="announcements" class="card-body"></div>
               </div>
             </div>
           </div>
-          <!-- /.container-fluid -->
+
+          <!-- Content Row -->
+          <div class="row">
+            <!-- Content Column -->
+            <div class="col-12 mb-4">
+              <!-- Project Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Contest Details
+                  </h6>
+                </div>
+                <div id="contestDetails" class="card-body"></div>
+              </div>
+            </div>
+          </div>
         </div>
+
         <!-- End of Main Content -->
 
         <!-- Footer -->

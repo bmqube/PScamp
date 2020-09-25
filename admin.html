@@ -26,6 +26,7 @@
     />
 
     <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/custom.css" />
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
   </head>
@@ -267,6 +268,229 @@
           </div>
         </div>
       </div>
+          <!-- Email -->
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4">
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                   Whitelisted Emails
+                  </h6>
+                  <div id="addNewEmail">
+                    <a
+                      href="#addEmail"
+                      class="collapsed"
+                      data-toggle="collapse"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="addEmail"
+                    >
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        Add New
+                      </h6>
+                    </a>
+                  </div>
+                </div>
+                <div class="collapse" id="addEmail">
+                  <div class="card-body">
+                    <div class="card mb-4 p-3 border-bottom-primary">
+                      <textarea id="emailText" class="form-control" rows="3"></textarea>
+                      <div class="mt-4 d-flex justify-content-center">
+                        <button
+                          id="addNewEmailButton"
+                          class="btn btn-primary mb-4"
+                          type="submit"
+                          onclick="this.disabled=true;this.innerText='Adding...'; addNewEmail()"
+                        >
+                          Add New Email
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div id="Email" class="card-body"></div>
+          </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+              <!-- Email Send -->
+              <div class="card shadow mb-4">
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary text-center">
+                    Send Email
+                  </h6>
+                  <div id="addNewEmailSend">
+                    <a
+                      href="#addEmailSend"
+                      class="collapsed"
+                      data-toggle="collapse"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="addEmailSend"
+                    >
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        Add New
+                      </h6>
+                    </a>
+                  </div>
+                </div>
+                <div class="collapse" id="addEmailSend">
+                  <div class="card-body">
+                    <div class="card mb-4 p-3 border-bottom-primary">
+                      <div class="row">
+                        <div class="col-6">
+                          <select class="form-control mb-2" id="selectEmail" onchange="makeSubmenu(this.id, this.value)">
+                            <option value="all">All</option>
+                            <option value="classrooms">Classroom</option>
+                            <option value="users">Users</option>
+                          </select>
+                          
+                        </div>
+                        <div class="col-6">
+                          <select class="form-control mb-2" id="customEmail" disabled></select>
+                        </div>
+                      </div>                 
+                      <input type="text" class="form-control mb-2" placeholder="Email subject here..." id="emailSendSubject">
+                      <textarea id="emailSendBody" class="form-control" rows="3" placeholder="Email body here...."></textarea>
+                      <div class="mt-4 d-flex justify-content-center">
+                        <button
+                          id="sendEmailButton"
+                          class="btn btn-primary mb-4"
+                          type="submit"
+                          onclick="this.disabled=true;this.innerText='Adding...'; sendMail()"
+                        >
+                          Send Mail
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div id="EmailSend" class="card-body"></div>
+            </div>
+          </div>
+          </div>
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <!-- Todo -->
+          <div class="card shadow mb-4">
+            <div
+              class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+            >
+              <h6 class="m-0 font-weight-bold text-primary text-center">
+                Todo
+              </h6>
+              <div id="addNewTodo">
+                <a
+                  href="#addTodo"
+                  class="collapsed"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="addTodo"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Add New
+                  </h6>
+                </a>
+              </div>
+            </div>
+            <div class="collapse" id="addTodo">
+              <div class="card-body">
+                <div class="card mb-4 p-3 border-bottom-primary">
+                  <div class="row">
+                    <div class="col-6">
+                      <select class="form-control mb-2" id="selectTodo" onchange="makeSubmenu(this.id, this.value)">
+                        <option value="all">All</option>
+                        <option value="classrooms">Classroom</option>
+                        <option value="users">Users</option>
+                      </select>
+                      
+                    </div>
+                    <div class="col-6">
+                      <select class="form-control mb-2" id="customTodo" disabled></select>
+                    </div>
+                  </div>                 
+                  <input type="text" class="form-control mb-2" placeholder="Expiry date here... (DD/MM/YYYY)" id="expiryDateTodo">
+                  <textarea id="todoBody" class="form-control" rows="3" placeholder="Todo message here...."></textarea>
+                  <div class="mt-4 d-flex justify-content-center">
+                    <button
+                      id="addTodoButton"
+                      class="btn btn-primary mb-4"
+                      type="submit"
+                      onclick="this.disabled=true;this.innerText='Adding...'; addTodo()"
+                    >
+                      Add Todo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div id="todo" class="card-body"></div>
+        </div>
+      </div>
+
+      <!-- Announcements -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-4">
+          <div
+              class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+            >
+              <h6 class="m-0 font-weight-bold text-primary text-center">
+                Announcements
+              </h6>
+              <div id="addNewAnnouncement">
+                <a
+                  href="#addAnnouncement"
+                  class="collapsed"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="addAnnouncement"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Add New
+                  </h6>
+                </a>
+              </div>
+            </div>
+            <div class="collapse" id="addAnnouncement">
+              <div class="card-body">
+                <div class="card mb-4 p-3 border-bottom-primary">
+                  <div class="row">
+                    <div class="col-6">
+                      <select class="form-control mb-2" id="selectAnnouncement" onchange="makeSubmenu(this.id, this.value)">
+                        <option value="all">All</option>
+                        <option value="classrooms">Classroom</option>
+                        <option value="users">Users</option>
+                      </select>
+                      
+                    </div>
+                    <div class="col-6">
+                      <select class="form-control mb-2" id="customAnnouncement" disabled></select>
+                    </div>
+                  </div>                 
+                  <input type="text" class="form-control mb-2" placeholder="Expiry date here... (DD/MM/YYYY)" id="expiryDateAnnouncement">
+                  <textarea id="announcementBody" class="form-control" rows="3" placeholder="Announcement message here...."></textarea>
+                  <div class="mt-4 d-flex justify-content-center">
+                    <button
+                      id="addAnnouncementButton"
+                      class="btn btn-primary mb-4"
+                      type="submit"
+                      onclick="this.disabled=true;this.innerText='Adding...'; addAnnouncement()"
+                    >
+                      Add Announcement
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div id="announcements" class="card-body"></div>
+        </div>
+      </div>
+    </div>
     </div>
       <!-- Main Content Ends -->
 
@@ -332,12 +556,13 @@
 
     <!-- Custom JS -->
     <script src="js/refresh_token.js"></script>
-    <script src="js/admin.js"></script>
     <script src="js/classroom.js"></script>
+    <script src="js/admin.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

@@ -90,7 +90,7 @@ function updateRankInfo() {
             td.innerText = element;
           } else {
             const a = document.createElement("a");
-            a.href = `dashboard.html?user=${element}`;
+            a.href = `dashboard.html?user=${element}&class=${classname}`;
             a.className = "text-decoration-none";
             a.target = "_blank";
             a.innerText = element;
@@ -109,7 +109,7 @@ function updateRankInfo() {
       // Data Table
       $(document).ready(function () {
         $("#dataTable").DataTable({
-          order: [[len - 1, "desc"]],
+          order: [[0, "asc"]],
         });
       });
     });
@@ -165,7 +165,7 @@ fetch(linkRank, {
           td.innerText = element;
         } else {
           const a = document.createElement("a");
-          a.href = `dashboard.html?user=${element}`;
+          a.href = `dashboard.html?user=${element}&class=${classname}`;
           a.className = "text-decoration-none";
           a.target = "_blank";
           a.innerText = element;
@@ -184,7 +184,7 @@ fetch(linkRank, {
     // Data Table
     $(document).ready(function () {
       $("#dataTable").DataTable({
-        order: [[len - 1, "desc"]],
+        order: [[0, "asc"]],
       });
     });
   });
