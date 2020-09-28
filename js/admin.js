@@ -276,7 +276,7 @@ fetch(linkWhitelistedEmail, {
       window.location.href = "/login.html";
     }
 
-    // console.log(data);
+    console.log(data);
     whitelistedEmail = data["email_list"];
 
     const tbody = document.getElementById("whiteListedBody");
@@ -532,14 +532,7 @@ function edit(id) {
 
 function deleteButton(msg) {
   const button = document.createElement("button");
-  button.classList.add(
-    "btn",
-    "btn-sm",
-    "btn-danger",
-    "btn-circle",
-    "ml-2",
-    "mt-3"
-  );
+  button.classList.add("btn", "btn-danger", "btn-circle");
   button.setAttribute("onclick", msg);
 
   const icon = document.createElement("i");
@@ -579,32 +572,26 @@ function deleteModal(id, type) {
 }
 
 function deleteEmail(id) {
-  const index = parseInt(id.replace(/[^0-9]/g, ""), 10);
-  whitelistedEmail.splice(index, 1);
-
-  // console.log(whitelistedEmail);
+  const email = document.getElementById(id).value;
+  // console.log(email);
 
   fetch(linkWhitelistedEmail, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email_list: whitelistedEmail,
+      email_list: [email],
     }),
   })
     .then((res) => res.json())
     .then((data) => {
-      bootbox.alert("Email Removed");
+      bootbox.alert(data["message"]);
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     });
-
-  setTimeout(() => {
-    const addNewEmailButton = document.getElementById("addNewEmailButton");
-    addNewEmailButton.disabled = false;
-    addNewEmailButton.innerText = "Add New Email";
-    // location.reload();
-  }, 2000);
 }
 
 function syncDB() {
@@ -667,34 +654,59 @@ function updateDB() {
   }
 }
 
+function checkEmail(input) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (re.test(input.value.trim())) {
+    showSuccess(input);
+    return true;
+  } else {
+    showError(input, "Email is not valid");
+    return false;
+  }
+}
+
 function addNewEmail() {
   const emailText = document.getElementById("emailText").value;
-  const formData = emailText.split(/\s*[,\n]+\s*/);
+  if (emailText) {
+    const formData = emailText.split(/\s*[,\n]+\s*/);
+    let preData = whitelistedEmail.concat(formData);
+    preData = [...new Set([...whitelistedEmail, ...formData])];
+    const sendData = [];
 
-  let sendData = whitelistedEmail.concat(formData);
-  sendData = [...new Set([...whitelistedEmail, ...formData])];
+    for (let i = 0; i < sendData.length; i++) {
+      const email = sendData[i];
+      if (checkEmail(email)) {
+        sendData.push(email);
+      }
+    }
 
-  fetch(linkWhitelistedEmail, {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + window.localStorage.getItem("access_token"),
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email_list: sendData,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      bootbox.alert(data);
-    });
+    fetch(linkWhitelistedEmail, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_list: sendData,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        bootbox.alert(data);
+      });
 
-  setTimeout(() => {
+    setTimeout(() => {
+      const addNewEmailButton = document.getElementById("addNewEmailButton");
+      addNewEmailButton.disabled = false;
+      addNewEmailButton.innerText = "Add New Email";
+      location.reload();
+    }, 2000);
+  } else {
+    bootbox.alert("List of emails can not be empty");
     const addNewEmailButton = document.getElementById("addNewEmailButton");
     addNewEmailButton.disabled = false;
     addNewEmailButton.innerText = "Add New Email";
-    location.reload();
-  }, 2000);
+  }
 }
 
 function sendMail() {

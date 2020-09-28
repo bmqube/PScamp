@@ -108,9 +108,17 @@ function updateRankInfo() {
 
       // Data Table
       $(document).ready(function () {
-        $("#dataTable").DataTable({
-          order: [[0, "asc"]],
+        const dt = $("#dataTable").DataTable({
+          order: [[1, "asc"]],
         });
+
+        dt.on("order.dt search.dt", function () {
+          dt.column(0, { search: "applied", order: "applied" })
+            .nodes()
+            .each(function (cell, i) {
+              cell.innerHTML = i + 1;
+            });
+        }).draw();
       });
     });
 }
@@ -144,6 +152,11 @@ fetch(linkRank, {
     const tr = document.createElement("tr");
 
     len = data[0].length;
+
+    const th = document.createElement("th");
+    th.innerText = "#";
+
+    tr.appendChild(th);
     for (let i = 0; i < data[0].length; i++) {
       const element = data[0][i];
 
@@ -157,6 +170,11 @@ fetch(linkRank, {
     const tBody = document.createElement("tbody");
     for (let i = 1; i < data.length; i++) {
       const trBody = document.createElement("tr");
+
+      const td = document.createElement("td");
+      td.innerText = i;
+      trBody.appendChild(td);
+
       for (let j = 0; j < data[i].length; j++) {
         const element = data[i][j];
 
@@ -183,8 +201,16 @@ fetch(linkRank, {
 
     // Data Table
     $(document).ready(function () {
-      $("#dataTable").DataTable({
-        order: [[0, "asc"]],
+      const dt = $("#dataTable").DataTable({
+        order: [[1, "asc"]],
       });
+
+      dt.on("order.dt search.dt", function () {
+        dt.column(0, { search: "applied", order: "applied" })
+          .nodes()
+          .each(function (cell, i) {
+            cell.innerHTML = i + 1;
+          });
+      }).draw();
     });
   });
