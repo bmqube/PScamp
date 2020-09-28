@@ -68,6 +68,11 @@ function updateRankInfo() {
       const thead = document.createElement("thead");
       const tr = document.createElement("tr");
 
+      const th = document.createElement("th");
+      th.innerText = "#";
+
+      tr.appendChild(th);
+
       len = data[0].length;
       for (let i = 0; i < data[0].length; i++) {
         const element = data[0][i];
@@ -82,6 +87,10 @@ function updateRankInfo() {
       const tBody = document.createElement("tbody");
       for (let i = 1; i < data.length; i++) {
         const trBody = document.createElement("tr");
+        const td = document.createElement("td");
+        td.innerText = i;
+        trBody.appendChild(td);
+
         for (let j = 0; j < data[i].length; j++) {
           const element = data[i][j];
 
