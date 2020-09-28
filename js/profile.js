@@ -93,6 +93,7 @@ fetch(linkProfile, {
 
 function updatePersonalInfo() {
   const elem = document.getElementById("personalUpdateAlert");
+  elem.innerHTML = "";
   if (checkLength(firstname, 3, 50)) {
     const alert = checkLength(firstname, 3, 50);
     elem.appendChild(alert);
@@ -121,7 +122,7 @@ function updatePersonalInfo() {
           window.localStorage.removeItem("access_token");
           window.location.href = "/login.html";
         }
-        if (data["message"] == "data updated") {
+        if (data["message"] == "User data is being updated") {
           const alert = getAlertElement("Profile Updated", "alert-success");
           elem.appendChild(alert);
           setTimeout(() => {
@@ -137,6 +138,7 @@ function updatePersonalInfo() {
 
 function updateOJInfo() {
   const elem = document.getElementById("OJUpdateAlert");
+  elem.innerHTML = "";
   const sendData = {
     oj_info: {
       CodeForces: {
@@ -184,7 +186,7 @@ function updateOJInfo() {
         window.localStorage.removeItem("access_token");
         window.location.href = "/login.html";
       }
-      if (data["message"] == "data updated") {
+      if (data["message"] == "User data is being updated") {
         const alert = getAlertElement("Profile Updated", "alert-success");
         elem.appendChild(alert);
         setTimeout(() => {
@@ -247,6 +249,7 @@ function gotoLOJ() {
 
 function updatePassword() {
   const elem = document.getElementById("passwordUpdateAlert");
+  elem.innerHTML = "";
   if (checkLength(newPassword1, 6, 50)) {
     const alert = checkLength(newPassword1, 6, 50);
     elem.appendChild(alert);
@@ -261,6 +264,7 @@ function updatePassword() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        old_password: password.value,
         password: newPassword1.value,
       }),
     })
@@ -270,9 +274,12 @@ function updatePassword() {
           window.localStorage.removeItem("access_token");
           window.location.href = "/login.html";
         }
-        if (data["message"] == "data updated") {
+        if (data["message"] == "User data is being updated") {
           const alert = getAlertElement("Password Updated", "alert-success");
           elem.appendChild(alert);
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         } else {
           const alert = getAlertElement(data["message"], "alert-danger");
           elem.appendChild(alert);

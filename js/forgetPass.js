@@ -1,4 +1,4 @@
-const link = url + "forgetpassword";
+const link = url + "resetpass";
 const userInfo = document.getElementById("input");
 
 function validateEmail(email) {
@@ -30,7 +30,7 @@ function forgetPass(e) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        bootbox.alert(data);
       });
   }
 }
