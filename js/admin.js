@@ -774,6 +774,7 @@ function sendMail() {
 }
 
 function addTodo() {
+  const sendEmail = document.getElementById("sendEmailTodo");
   const expiryDate = document.getElementById("expiryDateTodo");
   const expiryDateArray = expiryDate.value.split("/");
   const newExpiryDate = new Date(
@@ -788,6 +789,7 @@ function addTodo() {
   const sendData = {
     added_on: new Date().getTime(),
     expires_on: timeStamp,
+    // send_email: sendEmail.checked,
     todo: document.getElementById("todoBody").value,
     group: group,
   };
@@ -819,6 +821,7 @@ function addTodo() {
 }
 
 function addAnnouncement() {
+  const sendEmail = document.getElementById("sendEmailAnnouncement");
   const expiryDate = document.getElementById("expiryDateAnnouncement");
   const expiryDateArray = expiryDate.value.split("/");
   const newExpiryDate = new Date(
@@ -833,11 +836,12 @@ function addAnnouncement() {
   const sendData = {
     added_on: new Date().getTime(),
     expires_on: timeStamp,
+    // send_email: sendEmail.checked,
     group: group,
     announcement: document.getElementById("announcementBody").value,
   };
 
-  // console.log(sendData);
+  console.log(sendData);
 
   fetch(linkAnnouncements, {
     method: "PUT",

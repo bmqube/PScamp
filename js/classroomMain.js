@@ -22,7 +22,8 @@ const userTablesHead = document.getElementById("userTablesHead");
 let edit_access = false,
   len = 0,
   toBeDeleted = [],
-  userList = [];
+  userList = [],
+  userNotInClass = [];
 
 function getAlertElement(msg, cls) {
   const alert = document.createElement("div");
@@ -406,15 +407,15 @@ fetch(linkUser, {
 })
   .then((res) => res.json())
   .then((data) => {
-    // console.log(data);
+    console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
     }
 
     const users = data["user_list"];
-    const datalist = document.createElement("datalist");
-    datalist.setAttribute("id", "users");
+
+    const newUserList = document.getElementById("newUserList");
 
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
@@ -422,11 +423,11 @@ fetch(linkUser, {
       if (!userList.includes(user["username"])) {
         const option = document.createElement("option");
         option.value = user["username"];
-        datalist.appendChild(option);
+        option.innerText = user["username"];
+        newUserList.appendChild(option);
       }
-
-      document.getElementById("addNewUser").parentElement.appendChild(datalist);
     }
+    $("#newUserList").selectpicker();
   });
 
 function deleteUser(id) {
@@ -475,23 +476,12 @@ function updateClassInfo() {
 function addNewUser() {
   const alertNewUser = document.getElementById("alertNewUser");
   alertNewUser.innerHTML = "";
-  const newUser = document.getElementById("userNameNew").value;
-  if (!userList.includes(newUser)) {
-    userList.push(newUser);
-    updateClassInfo();
-    const addNewUser = document.getElementById("addNewUser");
-    addNewUser.disabled = false;
-    addNewUser.innerText = "Add New User";
-  } else {
-    const alert = getAlertElement(
-      "User already exists in this class",
-      "alert-danger"
-    );
-    alertNewUser.appendChild(alert);
-    const addNewUser = document.getElementById("addNewUser");
-    addNewUser.disabled = false;
-    addNewUser.innerText = "Add New User";
-  }
+  const newUser = $("#newUserList").val();
+  userList = [...userList, ...newUser];
+  updateClassInfo();
+  const addNewUser = document.getElementById("addNewUser");
+  addNewUser.disabled = false;
+  addNewUser.innerText = "Add New User";
 }
 
 function deleteClass() {
