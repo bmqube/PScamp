@@ -10479,3 +10479,18 @@ body.sidebar-toggled footer.sticky-footer {
 .show > .btn-white.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(221, 224, 227, 0.5);
 }
+
+#sidebar ul li a[data-toggle="collapse"]::after {
+  color: #858796;
+  width: 1rem;
+  text-align: center;
+  float: right;
+  vertical-align: 0;
+  border: 0;
+  font-weight: 900;
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+}
+#sidebar ul li a[data-toggle="collapse"].collapsed::after {
+  content: "\f105";
+}

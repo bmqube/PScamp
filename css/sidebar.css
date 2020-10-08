@@ -192,7 +192,7 @@ span {
   margin: 0 auto;
   display: block;
   background: #555;
-  transition: all 0.5s cubic-bezier(0.81, -0.33, 0.345, 1.375);
+  transition: all 0.5s cubic-bezier(0.81, -0.5, 0.345, 1.5);
 }
 
 #sidebarCollapse.active span:first-of-type {
