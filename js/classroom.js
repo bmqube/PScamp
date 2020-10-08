@@ -44,12 +44,12 @@ function addList() {
 
         if (data["edit_access"]) {
           const header = document.createElement("h6");
-          header.classList.add("collapse-header");
+          header.classList.add("sidebar-heading", "ml-3", "mt-3");
           header.innerText = "Admin Access:";
           classList.appendChild(header);
 
           const a = document.createElement("a");
-          a.classList.add("collapse-item");
+          a.classList.add("collapse-item", "ml-3");
           a.href = "/addClass.html";
           a.innerText = "Add New";
 
@@ -57,20 +57,21 @@ function addList() {
         }
 
         for (let i = 0; i < element.length; i++) {
+          classList.innerHTML += `<hr class="sidebar-divider ml-3"/>`;
           const elem = element[i]["classroom_name"];
 
           const header = document.createElement("h6");
-          header.classList.add("collapse-header");
+          header.classList.add("sidebar-heading", "ml-3", "mt-3");
           header.innerText = elem;
           classList.appendChild(header);
 
           const classInfo = document.createElement("a");
-          classInfo.classList.add("collapse-item");
+          classInfo.classList.add("collapse-item", "ml-3");
           classInfo.href = "classroom.html?class=" + elem;
           classInfo.innerText = "Class Information";
 
           const studentRank = document.createElement("a");
-          studentRank.classList.add("collapse-item");
+          studentRank.classList.add("collapse-item", "ml-3");
           studentRank.href = "ranklist.html?class=" + elem;
           studentRank.innerText = "Student Ranklist";
 

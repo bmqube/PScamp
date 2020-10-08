@@ -11,6 +11,27 @@ if (
   adminNav.classList.remove("d-none");
 }
 
+$(document).ready(function () {
+  $("#sidebar").mCustomScrollbar({
+    theme: "minimal",
+  });
+
+  $("#sidebarCollapse").on("click", function () {
+    if ($("#sidebar").hasClass("active")) {
+      $("#sidebar").removeClass("active");
+      $(".overlay").removeClass("active");
+      $("#sidebarCollapse").removeClass("active");
+      sidebarCollapse;
+    } else {
+      $("#sidebar").addClass("active");
+      $(".overlay").addClass("active");
+      $("#sidebarCollapse").addClass("active");
+      $(".collapse.in").toggleClass("in");
+      $("a[aria-expanded=true]").attr("aria-expanded", "false");
+    }
+  });
+});
+
 // fetch(link, {
 //   method: "POST",
 //   headers: {

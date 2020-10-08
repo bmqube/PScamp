@@ -25,103 +25,69 @@
       rel="stylesheet"
     />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+    />
+
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="css/custom.css" />
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/sidebar.css">
   </head>
 
   <body id="page-top">
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" class="wrapper">
       <!-- Sidebar -->
-      <ul
-        class="navbar-nav bg-light sidebar sidebar-light accordion"
-        id="accordionSidebar"
-      >
-        <!-- Sidebar - Brand -->
-        <a
-          class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-        >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">PScamp</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
-        <div class="sidebar-heading">Core</div>
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-          <a class="nav-link" href="dashboard.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a
-          >
-        </li>
-
-        <!-- Nav Item - Admin -->
-        <li id="adminNav" class="nav-item d-none">
-          <a class="nav-link" href="admin.html">
-            <i class="fas fa-user-shield"></i>
-            <span>Admin Panel</span></a
-          >
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
-
-        <!-- Heading -->
-        <div class="sidebar-heading">Interface</div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-          <a class="nav-link" href="solved.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Solve Details</span></a
-          >
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="users.html">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Users</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseTwo"
-            aria-expanded="true"
-            aria-controls="collapseTwo"
-            onclick="addList()"
-          >
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Classroom</span>
-          </a>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div
-              id="classList"
-              class="bg-white py-2 collapse-inner rounded"
-            ></div>
-          </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block" />
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
+      <nav id="sidebar" class="border-right mt-6">
+        <ul class="list-unstyled components">
+          <div class="sidebar-heading">Core</div>
+          <li>
+            <a href="dashboard.html">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span></a
+            >
+          </li>
+          <li id="adminNav" class="d-none">
+            <a href="admin.html">
+              <i class="fas fa-user-shield text-muted"></i>
+              <span>Admin Panel</span></a
+            >
+          </li>
+  
+          <!-- Divider -->
+          <hr class="sidebar-divider" />
+  
+          <!-- Heading -->
+          <div class="sidebar-heading">Interface</div>
+  
+          <!-- Nav Item - Pages Collapse Menu -->
+          <li>
+            <a href="solved.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Solve Details</span></a
+            >
+          </li>
+          <li class="active">
+            <a href="users.html">
+              <i class="fas fa-fw fa-user"></i>
+              <span>Users</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="#classList" data-toggle="collapse" aria-expanded="false"
+              onclick="addList()"
+            >
+              <i class="fas fa-fw fa-folder"></i>
+              <span>Classroom</span>
+              <i class="float-right fas fa-chevron-down"></i>
+            </a>
+            <ul class="collapse list-unstyled" id="classList"></ul>
+          </li>
+        </ul>
+    </nav>
       <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
@@ -130,15 +96,18 @@
         <div id="content">
           <!-- Topbar -->
           <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            class="navbar navbar-expand navbar-light bg-white topbar static-top fixed-top shadow border-bottom-primary"
           >
             <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
+            <button type="button" id="sidebarCollapse" class="navbar-btn">
+              <span></span>
+              <span></span>
+              <span></span>
             </button>
+            
+            <div class="font-weight-bold ml-3">
+              <h3><a href="/">PScamp</a></h3>
+            </div>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -173,7 +142,7 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
-  
+
                   <div class="dropdown-divider"></div>
                   <a
                     class="dropdown-item"
@@ -284,20 +253,45 @@
     
 
     <!-- Custom JS -->
-    <script src="js/refresh_token.js"></script>
     <script src="js/classroom.js"></script>
     <!-- <script src="js/solved.js"></script> -->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <!-- <script src="js/sb-admin-2.min.js"></script> -->
+    
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <!-- Popper.JS -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"
+  ></script>
+  <!-- Bootstrap JS -->
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+    integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"
+  ></script>
 
+  <!-- jQuery Custom Scroller CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <!-- <script src="js/sb-admin-2.min.js"></script> -->
+
+  <!-- Page level custom scripts -->
+  <script src="js/refresh_token.js"></script>
     <!-- Page level plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
     <script src="js/users.js"></script>

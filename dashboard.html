@@ -24,104 +24,69 @@
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+    />
 
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="css/custom.css" />
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/sidebar.css">
   </head>
 
   <body id="page-top">
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" class="wrapper">
       <!-- Sidebar -->
-      <ul
-        class="navbar-nav bg-light sidebar sidebar-light accordion"
-        id="accordionSidebar"
-      >
-        <!-- Sidebar - Brand -->
-        <a
-          class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-        >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">PScamp</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
-        <div class="sidebar-heading">Core</div>
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-          <a class="nav-link" href="dashboard.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a
-          >
-        </li>
-
-        <!-- Nav Item - Admin -->
-        <li id="adminNav" class="nav-item d-none">
-          <a class="nav-link" href="admin.html">
-            <i class="fas fa-user-shield"></i>
-            <span>Admin Panel</span></a
-          >
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
-
-        <!-- Heading -->
-        <div class="sidebar-heading">Interface</div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-          <a class="nav-link" href="solved.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Solve Details</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="users.html">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Users</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseTwo"
-            aria-expanded="true"
-            aria-controls="collapseTwo"
-            onclick="addList()"
-          >
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Classroom</span>
-          </a>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div
-              id="classList"
-              class="bg-white py-2 collapse-inner rounded"
-            ></div>
-          </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block" />
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
+      <nav id="sidebar" class="border-right mt-6">
+        <ul class="list-unstyled components">
+          <div class="sidebar-heading">Core</div>
+          <li class="active">
+            <a href="dashboard.html">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span></a
+            >
+          </li>
+          <li id="adminNav" class="d-none">
+            <a href="admin.html">
+              <i class="fas fa-user-shield text-muted"></i>
+              <span>Admin Panel</span></a
+            >
+          </li>
+  
+          <!-- Divider -->
+          <hr class="sidebar-divider" />
+  
+          <!-- Heading -->
+          <div class="sidebar-heading">Interface</div>
+  
+          <!-- Nav Item - Pages Collapse Menu -->
+          <li>
+            <a href="solved.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Solve Details</span></a
+            >
+          </li>
+          <li>
+            <a href="users.html">
+              <i class="fas fa-fw fa-user"></i>
+              <span>Users</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="#classList" data-toggle="collapse" aria-expanded="false"
+              onclick="addList()"
+            >
+              <i class="fas fa-fw fa-folder"></i>
+              <span>Classroom</span>
+              <i class="float-right fas fa-chevron-down"></i>
+            </a>
+            <ul class="collapse list-unstyled" id="classList"></ul>
+          </li>
+        </ul>
+    </nav>
       <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
@@ -130,15 +95,17 @@
         <div id="content">
           <!-- Topbar -->
           <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            class="navbar navbar-expand navbar-light bg-white topbar static-top fixed-top shadow border-bottom-primary"
           >
-            <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
+            <button type="button" id="sidebarCollapse" class="navbar-btn">
+              <span></span>
+              <span></span>
+              <span></span>
             </button>
+            
+            <div class="font-weight-bold ml-3">
+              <h3><a href="/">PScamp</a></h3>
+            </div>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -193,15 +160,51 @@
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
-          <div class="container-fluid">
+          <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10 mt-5">
+            <div class="container">
+                <div class="page-header-content pt-4">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-auto mt-4">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                                Dashboard
+                            </h1>
+                            <div class="page-header-subtitle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar mr-2 text-primary"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                              <span id="date"></span></div>
+                        </div>
+                        <!-- <div class="col-12 col-xl-auto mt-4">
+                            <button class="btn btn-white btn-sm line-height-normal p-3" id="downloadLOJ">
+                              <i class="fas fa-file-download"></i> Download LightOJ Solve Details
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </header>
+          <div class="container-fluid mt-n10">
+            <div class="mb-4 shadow">
+              <div class="card h-100">
+                  <div class="card-body h-100 d-flex flex-column justify-content-center py-5 py-xl-4">
+                      <div class="row align-items-center">
+                          <div class="col-xl-8 col-xxl-12">
+                              <div class="text-center px-4 mb-4 mb-xl-0 mb-xxl-4">
+                                  <h1 class="text-primary">Welcome Back!</h1>
+                                  <p class="text-gray-700 mb-0">It's time to get started! View your remaining tasks, announcements and todos</p>
+                              </div>
+                          </div>
+                          <div class="col-xl-4 col-xxl-12 text-center"><img class="img-fluid" src="img/at-work-pana.svg" style="max-width: 26rem;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
             <!-- Page Heading -->
-            <div
+            <!-- <div
               class="d-sm-flex align-items-center justify-content-between mb-4"
             >
               <h1 id="dashboardText" class="h3 mb-0 text-gray-800">
                 Dashboard
               </h1>
-            </div>
+            </div> -->
 
             <!-- Content Row -->
             <div class="row">
@@ -345,8 +348,18 @@
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
-                    <div class="chart-area">
-                      <canvas id="myAreaChart"></canvas>
+                    <div class="chart-area" id="showChartArea">
+                      <div class="d-flex flex-column align-items-center justify-content-center mb-4">
+                        <div class="mr-3">
+                          <div class="icon-circle bg-warning">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          No Data Available
+                        </div>
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -363,15 +376,24 @@
                       id="solvePerDayAnalysis"
                       class="m-0 font-weight-bold text-primary"
                     >
-                      Solve Per Day Analysis (Last
+                      Solve Per Day Analysis (Last 0 Days)
                     </h6>
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                      <canvas id="myPieChart"></canvas>
+                    <div class="chart-pie pt-4 pb-2" id="showPieChart">
+                      <div class="d-flex flex-column align-items-center justify-content-center mb-5">
+                        <div class="mr-3">
+                          <div class="icon-circle bg-warning">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          No Data Available
+                        </div>
+                      </div>
                     </div>
-                    <div id="solveCountsPerDay" class="mt-4 text-center small">
+                    <div id="solveCountsPerDay" class="mt-4 text-center small d-none">
                       <span class="mr-2">
                         <i class="fas fa-circle text-danger"></i> Zero
                       </span>
@@ -401,7 +423,18 @@
                       Todo
                     </h6>
                   </div>
-                <div id="todo" class="card-body"></div>
+                <div id="todo" class="card-body">
+                  <div class="d-flex align-items-center mb-4">
+                    <div class="mr-3">
+                      <div class="icon-circle bg-success">
+                        <i class="fa fa-check text-white" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div>
+                      Hurrah! No todo remaining.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -415,7 +448,18 @@
                       Announcements
                     </h6>
                   </div>
-                <div id="announcements" class="card-body"></div>
+                <div id="announcements" class="card-body">
+                  <div class="d-flex align-items-center mb-4">
+                    <div class="mr-3">
+                      <div class="icon-circle bg-primary">
+                        <i class="fas fa-file-alt text-white"></i>
+                      </div>
+                    </div>
+                    <div>
+                      No Announcements
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -431,7 +475,9 @@
                     Contest Details
                   </h6>
                 </div>
-                <div id="contestDetails" class="card-body"></div>
+                <div id="contestDetails" class="card-body">
+                  No Data Available For Your ID
+                </div>
               </div>
             </div>
           </div>
@@ -498,24 +544,45 @@
     </div>
 
     <!-- Custom JS -->
-    <script src="js/refresh_token.js"></script>
     <script src="js/classroom.js"></script>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Popper.JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <!-- <script src="js/sb-admin-2.min.js"></script> -->
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/refresh_token.js"></script>
     <!-- <script type="module" src="js/demo/chart-pie-demo.js"></script> -->
   </body>
 </html>

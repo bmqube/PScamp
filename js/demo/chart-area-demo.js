@@ -15,6 +15,10 @@ const currentLocation = window.location.href;
 const currentURL = new URL(currentLocation);
 const userName = currentURL.searchParams.get("user");
 const classname = currentURL.searchParams.get("class");
+const date = document.getElementById("date");
+
+var todayDate = new Date();
+document.getElementById("date").innerHTML = todayDate.toDateString();
 
 if (classname) {
   sendData["classroom_name"] = classname;
@@ -121,6 +125,9 @@ fetch(linkDashboard, {
 
       // To Do
       const todoList = document.getElementById("todo");
+      if (data["todo_list"].length) {
+        todoList.innerHTML = "";
+      }
       for (let i = 0; i < data["todo_list"].length; i++) {
         const todo = data["todo_list"][i];
         todoList.innerHTML += `<div class="d-flex align-items-center mb-4">
@@ -137,6 +144,9 @@ fetch(linkDashboard, {
 
       // Announcements
       const announcements = document.getElementById("announcements");
+      if (data["announcement_list"].length) {
+        announcements.innerHTML = "";
+      }
       for (let i = 0; i < data["announcement_list"].length; i++) {
         const announcement = data["announcement_list"][i];
         announcements.innerHTML += `<div class="d-flex align-items-center mb-4">
@@ -152,6 +162,9 @@ fetch(linkDashboard, {
       }
 
       // Progress Bar
+      if (data["long_contests"].length) {
+        contestDetails.innerHTML = "";
+      }
       for (let i = 0; i < data["long_contests"].length; i++) {
         const contest = data["long_contests"][i];
 
@@ -161,7 +174,7 @@ fetch(linkDashboard, {
         );
         minSolved += contest["minimum_solve_required"];
 
-        const solvePercentage = Math.round(
+        const solvePercentage = Math.floor(
           (contest["solved_problems"] / contest["total_problems"]) * 100
         );
 
@@ -249,7 +262,7 @@ fetch(linkDashboard, {
 
       document.getElementById(
         "solvePerDayAnalysis"
-      ).innerText += ` ${data["last_30_days_solve"][1].length} Days)`;
+      ).innerText = `Solve Per Day Analysis (Last ${data["last_30_days_solve"][1].length} Days)`;
 
       for (let i = 0; i < labels.length; i++) {
         const element = labels[i];
@@ -265,141 +278,154 @@ fetch(linkDashboard, {
         values.push(obj[element]);
       }
 
-      const pieChart = document.getElementById("myPieChart");
-      const myPieChart = new Chart(pieChart, {
-        type: "doughnut",
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              data: values,
-              backgroundColor: colorArray,
-              hoverBackgroundColor: colorArray,
-              hoverBorderColor: "rgba(234, 236, 244, 1)",
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: "#dddfeb",
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            caretPadding: 10,
-            mode: "label",
-            callbacks: {
-              label: function (tooltipItem, data) {
-                var indice = tooltipItem.index;
-                return data.datasets[0].data[indice] + " Days";
+      if (labels.length) {
+        const showPieChart = document.getElementById("showPieChart");
+        showPieChart.innerHTML = `<canvas id="myPieChart"></canvas>`;
+        const solveCountsPerDay = document.getElementById("solveCountsPerDay");
+        solveCountsPerDay.classList.remove("d-none");
+
+        const pieChart = document.getElementById("myPieChart");
+        const myPieChart = new Chart(pieChart, {
+          type: "doughnut",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: values,
+                backgroundColor: colorArray,
+                hoverBackgroundColor: colorArray,
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            tooltips: {
+              backgroundColor: "rgb(255,255,255)",
+              bodyFontColor: "#858796",
+              borderColor: "#dddfeb",
+              borderWidth: 1,
+              xPadding: 15,
+              yPadding: 15,
+              displayColors: false,
+              caretPadding: 10,
+              mode: "label",
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  var indice = tooltipItem.index;
+                  return data.datasets[0].data[indice] + " Days";
+                },
               },
             },
+            legend: {
+              display: false,
+            },
+            cutoutPercentage: 80,
           },
-          legend: {
-            display: false,
-          },
-          cutoutPercentage: 80,
-        },
-      });
+        });
+      }
 
       // Area Chart
-      var ctx = document.getElementById("myAreaChart");
-      var myLineChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: data["last_30_days_solve"][0].reverse(),
-          datasets: [
-            {
-              label: "Solved",
-              lineTension: 0.3,
-              backgroundColor: "rgba(78, 115, 223, 0.05)",
-              borderColor: "rgba(78, 115, 223, 1)",
-              pointRadius: 3,
-              pointBackgroundColor: "rgba(78, 115, 223, 1)",
-              pointBorderColor: "rgba(78, 115, 223, 1)",
-              pointHoverRadius: 3,
-              pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-              pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-              pointHitRadius: 10,
-              pointBorderWidth: 2,
-              data: data["last_30_days_solve"][1].reverse(),
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          layout: {
-            padding: {
-              left: 10,
-              right: 25,
-              top: 25,
-              bottom: 0,
-            },
-          },
-          scales: {
-            xAxes: [
+      if (data["last_30_days_solve"][0].length) {
+        const showChartArea = document.getElementById("showChartArea");
+        showChartArea.innerHTML = `<canvas id="myAreaChart"></canvas>`;
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: data["last_30_days_solve"][0].reverse(),
+            datasets: [
               {
-                time: {
-                  unit: "date",
-                },
-                gridLines: {
-                  display: false,
-                  drawBorder: false,
-                },
-                ticks: {
-                  maxTicksLimit: 7,
-                },
+                label: "Solved",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: data["last_30_days_solve"][1].reverse(),
               },
             ],
-            yAxes: [
-              {
-                ticks: {
-                  maxTicksLimit: 5,
-                  padding: 10,
-                  // Include a dollar sign in the ticks
-                  callback: function (value, index, values) {
-                    return number_format(value);
+          },
+          options: {
+            maintainAspectRatio: false,
+            layout: {
+              padding: {
+                left: 10,
+                right: 25,
+                top: 25,
+                bottom: 0,
+              },
+            },
+            scales: {
+              xAxes: [
+                {
+                  time: {
+                    unit: "date",
+                  },
+                  gridLines: {
+                    display: false,
+                    drawBorder: false,
+                  },
+                  ticks: {
+                    maxTicksLimit: 7,
                   },
                 },
-                gridLines: {
-                  color: "rgb(234, 236, 244)",
-                  zeroLineColor: "rgb(234, 236, 244)",
-                  drawBorder: false,
-                  borderDash: [2],
-                  zeroLineBorderDash: [2],
+              ],
+              yAxes: [
+                {
+                  ticks: {
+                    maxTicksLimit: 5,
+                    padding: 10,
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, values) {
+                      return number_format(value);
+                    },
+                  },
+                  gridLines: {
+                    color: "rgb(234, 236, 244)",
+                    zeroLineColor: "rgb(234, 236, 244)",
+                    drawBorder: false,
+                    borderDash: [2],
+                    zeroLineBorderDash: [2],
+                  },
                 },
-              },
-            ],
-          },
-          legend: {
-            display: false,
-          },
-          tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            titleMarginBottom: 10,
-            titleFontColor: "#6e707e",
-            titleFontSize: 14,
-            borderColor: "#dddfeb",
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            intersect: false,
-            mode: "index",
-            caretPadding: 10,
-            callbacks: {
-              label: function (tooltipItem, chart) {
-                var datasetLabel =
-                  chart.datasets[tooltipItem.datasetIndex].label || "";
-                return datasetLabel + ": " + number_format(tooltipItem.yLabel);
+              ],
+            },
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              backgroundColor: "rgb(255,255,255)",
+              bodyFontColor: "#858796",
+              titleMarginBottom: 10,
+              titleFontColor: "#6e707e",
+              titleFontSize: 14,
+              borderColor: "#dddfeb",
+              borderWidth: 1,
+              xPadding: 15,
+              yPadding: 15,
+              displayColors: false,
+              intersect: false,
+              mode: "index",
+              caretPadding: 10,
+              callbacks: {
+                label: function (tooltipItem, chart) {
+                  var datasetLabel =
+                    chart.datasets[tooltipItem.datasetIndex].label || "";
+                  return (
+                    datasetLabel + ": " + number_format(tooltipItem.yLabel)
+                  );
+                },
               },
             },
           },
-        },
-      });
+        });
+      }
     }
   });
