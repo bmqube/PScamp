@@ -212,6 +212,7 @@ fetch(linkRank, {
     $(document).ready(function () {
       const dt = $("#dataTable").DataTable({
         order: [[1, "asc"]],
+        pageLength: 100,
       });
 
       dt.on("order.dt search.dt", function () {

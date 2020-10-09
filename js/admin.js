@@ -31,7 +31,7 @@ fetch(linkUpdateScheduler, {
 })
   .then((res) => res.json())
   .then((data) => {
-    // console.log(data);
+    console.log(data);
     nextRunOn.innerText += ` ${data["next_run_time"].split(".")[0]}`;
 
     let len = data["interval"].length;
@@ -789,7 +789,6 @@ function addTodo() {
   const sendData = {
     added_on: new Date().getTime(),
     expires_on: timeStamp,
-    // send_email: sendEmail.checked,
     todo: document.getElementById("todoBody").value,
     group: group,
   };
@@ -802,6 +801,7 @@ function addTodo() {
     },
     body: JSON.stringify({
       todos_list: [sendData],
+      // send_email: sendEmail.checked,
     }),
   })
     .then((res) => res.json())
@@ -836,7 +836,6 @@ function addAnnouncement() {
   const sendData = {
     added_on: new Date().getTime(),
     expires_on: timeStamp,
-    // send_email: sendEmail.checked,
     group: group,
     announcement: document.getElementById("announcementBody").value,
   };
@@ -851,6 +850,7 @@ function addAnnouncement() {
     },
     body: JSON.stringify({
       announcements_list: [sendData],
+      // send_email: sendEmail.checked,
     }),
   })
     .then((res) => res.json())

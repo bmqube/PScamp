@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #858796;
   text-align: left;
-  background-color: #fff;
+  background-color: #a2acba;
 }
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -525,6 +525,7 @@ pre code {
   padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
+  transition: all 0.3s ease-out;
 }
 @media (min-width: 576px) {
   .container,
@@ -533,6 +534,14 @@ pre code {
   }
 }
 @media (min-width: 768px) {
+  .container-fluid {
+    margin: 100px 100px 0 100px;
+    width: auto;
+  }
+  .container-fluid.active {
+    margin-left: 200px;
+    margin-right: 50px;
+  }
   .container,
   .container-md,
   .container-sm {
@@ -7079,7 +7088,7 @@ button.bg-dark:hover {
   margin-top: 3rem !important;
 }
 .mt-6 {
-  margin-top: 4.3rem !important;
+  margin-top: 3.5rem !important;
 }
 .mr-5,
 .mx-5 {
@@ -9314,7 +9323,7 @@ a:focus {
   width: 2rem;
 }
 .topbar {
-  height: 4.375rem;
+  height: 3.5rem;
 }
 .topbar #sidebarToggleTop {
   height: 2.5rem;
@@ -10343,6 +10352,7 @@ body.sidebar-toggled footer.sticky-footer {
   margin-bottom: 0;
 }
 .page-header .page-header-content .page-header-title .page-header-icon {
+  /* margin-left: ; */
   margin-right: 0.5rem;
   display: inline-flex;
 }

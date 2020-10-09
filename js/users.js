@@ -20,7 +20,7 @@ fetch(linkUser, {
 })
   .then((res) => res.json())
   .then((data) => {
-    // console.log(data);
+    console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
@@ -47,6 +47,9 @@ fetch(linkUser, {
       a.innerText = user["username"];
       username.appendChild(a);
 
+      const fullname = document.createElement("td");
+      fullname.innerText = `${user["first_name"]} ${user["last_name"]}`;
+
       const totalSolve = document.createElement("td");
 
       let solveCount = 0;
@@ -61,6 +64,7 @@ fetch(linkUser, {
       const tr = document.createElement("tr");
       tr.appendChild(th);
       tr.appendChild(username);
+      tr.appendChild(fullname);
       tr.appendChild(totalSolve);
 
       if (data["delete_access"]) {
@@ -72,6 +76,20 @@ fetch(linkUser, {
 
       users.appendChild(tr);
     }
+    $(document).ready(function () {
+      const dt = $("#dataTable").DataTable({
+        order: [[3, "desc"]],
+        pageLength: 100,
+      });
+
+      dt.on("order.dt search.dt", function () {
+        dt.column(0, { search: "applied", order: "applied" })
+          .nodes()
+          .each(function (cell, i) {
+            cell.innerHTML = i + 1;
+          });
+      }).draw();
+    });
   });
 
 function deleteModal(id) {

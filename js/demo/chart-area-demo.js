@@ -24,6 +24,9 @@ if (classname) {
   sendData["classroom_name"] = classname;
 }
 if (userName) {
+  document.getElementById(
+    "dashboardText"
+  ).innerText = `${userName}'s Dashboard`;
   sendData["username"] = userName;
 }
 

@@ -87,7 +87,6 @@
             >
               <i class="fas fa-fw fa-folder"></i>
               <span>Classroom</span>
-              <i class="float-right fas fa-chevron-down"></i>
             </a>
             <ul class="collapse list-unstyled" id="classList"></ul>
           </li>
@@ -267,9 +266,18 @@
                   <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                   >
-                    <h6 class="m-0 font-weight-bold text-primary text-center">
-                      Todo
-                    </h6>
+                  <a
+                  href="#collapseTodo"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="collapseTodo"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Todo 
+                    <i class="fas fa-chevron-down"></i>
+                  </h6>
+                </a>
                     <div id="addNewTodo">
                       <a
                         href="#addTodo"
@@ -327,8 +335,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-body">
-                    <div id="todos" class="list-group"></div>
+                  <div class="collapse" id="collapseTodo">
+                    <div class="card-body">
+                      <div id="todos" class="list-group"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -339,9 +349,18 @@
                   <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                   >
-                    <h6 class="m-0 font-weight-bold text-primary text-center">
-                      Announcements
-                    </h6>
+                  <a
+                  href="#collapseAnnouncement"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="collapseAnnouncement"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Announcement
+                    <i class="fas fa-chevron-down"></i>
+                  </h6>
+                </a>
                     <div id="addNewAnnouncement">
                       <a
                         href="#addAnnouncement"
@@ -401,8 +420,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-body">
-                    <div id="announcements" class="list-group"></div>
+                  <div class="collapse" id="collapseAnnouncement">
+                    <div class="card-body">
+                      <div id="announcements" class="list-group"></div>
+                    </div>
                   </div>
                 </div>
               </div>
