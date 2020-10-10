@@ -78,7 +78,7 @@ fetch(linkUser, {
     }
     $(document).ready(function () {
       const dt = $("#dataTable").DataTable({
-        order: [[3, "desc"]],
+        order: [[0, "asc"]],
         pageLength: 100,
       });
 
