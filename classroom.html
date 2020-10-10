@@ -231,32 +231,73 @@
                   </div>
                 </div>
                 <div class="collapse" id="addUser">
-                  <div class="card-body">
-                    <div class="card mb-4 p-3 border-bottom-primary">
-                      <div class="row mb-2 mt-4">
-                        <label
-                          for="newUserList"
-                          class="col-5 font-weight-bold col-form-label"
-                          >Username:
-                        </label>
-                        <div class="col-5">
-                          <select
-                            id="newUserList"
-                            class="form-control"
-                            multiple
-                          ></select>
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a
+                        href="#byUsername"
+                        class="nav-link active"
+                        data-toggle="tab"
+                        >Add By Username</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#byEmail" class="nav-link" data-toggle="tab"
+                        >Add By Email</a
+                      >
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="byUsername">
+                      <div class="card-body mt-0">
+                        <div class="card mb-4 p-3 border-bottom-primary">
+                          <div class="row mb-2 mt-4">
+                            <label
+                              for="newUserList"
+                              class="col-5 font-weight-bold col-form-label"
+                              >Username:
+                            </label>
+                            <div class="col-5">
+                              <select
+                                id="newUserList"
+                                class="form-control"
+                                multiple
+                              ></select>
+                            </div>
+                          </div>
+                          <div id="alertNewUser"></div>
+                          <div class="mt-4 d-flex justify-content-center">
+                            <button
+                              id="addNewUser"
+                              class="btn btn-primary mb-4"
+                              type="submit"
+                              onclick="this.disabled=true;this.innerText='Adding...';addNewUser()"
+                            >
+                              Add New Users
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div id="alertNewUser"></div>
-                      <div class="mt-4 d-flex justify-content-center">
-                        <button
-                          id="addNewUser"
-                          class="btn btn-primary mb-4"
-                          type="submit"
-                          onclick="this.disabled=true;this.innerText='Adding...';addNewUser()"
-                        >
-                          Add New User
-                        </button>
+                    </div>
+                    <div class="tab-pane fade" id="byEmail">
+                      <div class="card-body">
+                        <div class="card mb-4 p-3 border-bottom-primary">
+                          <textarea
+                            id="emailText"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Enter a list of emails seperated by ',' or newlines"
+                          ></textarea>
+                          <div class="mt-4 d-flex justify-content-center">
+                            <button
+                              id="addNewEmail"
+                              class="btn btn-primary mb-4"
+                              type="submit"
+                              onclick="this.disabled=true;this.innerText='Adding...'; addNewEmail()"
+                            >
+                              Add New Users
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

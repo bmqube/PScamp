@@ -23,7 +23,8 @@ let edit_access = false,
   len = 0,
   toBeDeleted = [],
   userList = [],
-  userNotInClass = [];
+  userNotInClass = [],
+  emailList = {};
 
 function getAlertElement(msg, cls) {
   const alert = document.createElement("div");
@@ -426,6 +427,8 @@ fetch(linkUser, {
         option.innerText = user["username"];
         newUserList.appendChild(option);
       }
+
+      emailList[user["email"]] = user["username"];
     }
     $("#newUserList").selectpicker();
   });
@@ -481,7 +484,32 @@ function addNewUser() {
   updateClassInfo();
   const addNewUser = document.getElementById("addNewUser");
   addNewUser.disabled = false;
-  addNewUser.innerText = "Add New User";
+  addNewUser.innerText = "Add New Users";
+}
+
+function checkEmail(input) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(input.trim());
+}
+
+function addNewEmail() {
+  const emailText = document.getElementById("emailText").value;
+  if (emailText) {
+    const formData = emailText.split(/\s*[,\n]+\s*/);
+    const sendData = [];
+
+    for (let i = 0; i < formData.length; i++) {
+      const email = formData[i];
+      if (checkEmail(email) && !userList.includes(emailList[email])) {
+        sendData.push(emailList[email]);
+      }
+    }
+    userList = [...userList, ...sendData];
+    updateClassInfo();
+    const addNewEmail = document.getElementById("addNewEmail");
+    addNewEmail.disabled = false;
+    addNewEmail.innerText = "Add New Users";
+  }
 }
 
 function deleteClass() {

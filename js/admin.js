@@ -31,7 +31,7 @@ fetch(linkUpdateScheduler, {
 })
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     nextRunOn.innerText += ` ${data["next_run_time"].split(".")[0]}`;
 
     let len = data["interval"].length;
@@ -276,7 +276,7 @@ fetch(linkWhitelistedEmail, {
       window.location.href = "/login.html";
     }
 
-    console.log(data);
+    // console.log(data);
     whitelistedEmail = data["email_list"];
 
     const tbody = document.getElementById("whiteListedBody");
@@ -656,11 +656,11 @@ function updateDB() {
 
 function checkEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (re.test(input.value.trim())) {
-    showSuccess(input);
+  if (re.test(input.trim())) {
+    // showSuccess(input);
     return true;
   } else {
-    showError(input, "Email is not valid");
+    // showError(input, "Email is not valid");
     return false;
   }
 }
@@ -673,8 +673,8 @@ function addNewEmail() {
     preData = [...new Set([...whitelistedEmail, ...formData])];
     const sendData = [];
 
-    for (let i = 0; i < sendData.length; i++) {
-      const email = sendData[i];
+    for (let i = 0; i < preData.length; i++) {
+      const email = preData[i];
       if (checkEmail(email)) {
         sendData.push(email);
       }
@@ -840,7 +840,7 @@ function addAnnouncement() {
     announcement: document.getElementById("announcementBody").value,
   };
 
-  console.log(sendData);
+  // console.log(sendData);
 
   fetch(linkAnnouncements, {
     method: "PUT",
