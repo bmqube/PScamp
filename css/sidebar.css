@@ -54,7 +54,7 @@ a:focus {
   z-index: 999;
   background: #fff;
   color: #000;
-  transition: all 0.5s cubic-bezier(0, -0.3, 0, 1);
+  transition: all 0.5s;
   overflow-y: scroll;
   padding-bottom: 5rem;
   /* box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); */
