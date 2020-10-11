@@ -408,7 +408,7 @@ fetch(linkUser, {
 })
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
       window.location.href = "/login.html";
