@@ -525,7 +525,7 @@ pre code {
   padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
-  transition: all 0.3s ease-out;
+  transition: all 0.5s cubic-bezier(0.5, -0.3, 0.25, 1);
 }
 @media (min-width: 576px) {
   .container,
@@ -1731,6 +1731,19 @@ pre code {
   }
   .table-responsive-md > .table-bordered {
     border: 0;
+  }
+  #content.active::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 550;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
   }
 }
 @media (max-width: 991.98px) {

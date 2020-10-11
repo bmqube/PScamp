@@ -22,12 +22,14 @@ $(document).ready(function () {
       $(".overlay").removeClass("active");
       $("#sidebarCollapse").removeClass("active");
       $(".container-fluid").removeClass("active");
+      $("#content").removeClass("active");
       sidebarCollapse;
     } else {
       $("#sidebar").addClass("active");
       $(".overlay").addClass("active");
       $("#sidebarCollapse").addClass("active");
       $(".container-fluid").addClass("active");
+      $("#content").addClass("active");
       $(".collapse.in").toggleClass("in");
       $("a[aria-expanded=true]").attr("aria-expanded", "false");
     }
