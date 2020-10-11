@@ -55,7 +55,6 @@ function updateRankInfo() {
         window.localStorage.removeItem("access_token");
         window.location.href = "/login.html";
       }
-      console.log(contestType.value);
 
       const spinner = document.getElementById("spinner");
       if (!spinner.classList.contains("d-none")) {
@@ -119,6 +118,7 @@ function updateRankInfo() {
       $(document).ready(function () {
         const dt = $("#dataTable").DataTable({
           order: [[1, "asc"]],
+          pageLength: 100,
         });
 
         dt.on("order.dt search.dt", function () {
@@ -145,7 +145,10 @@ fetch(linkRank, {
     end_time: 1000000000000000000000000000000,
   }),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    console.log(res);
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
