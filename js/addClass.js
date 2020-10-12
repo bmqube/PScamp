@@ -28,7 +28,12 @@ function addClass() {
         user_list: {},
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 401 || res.status == 422) {
+          logout();
+        }
+        return res.json();
+      })
       .then((data) => {
         if (data["msg"] == "Token has expired") {
           window.localStorage.removeItem("access_token");

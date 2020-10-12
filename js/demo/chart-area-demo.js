@@ -62,7 +62,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 function addNewAnnouncement() {
   const announcement = document.getElementById("announcementMessage");
-  console.log(announcement.value);
+  // console.log(announcement.value);
 
   setTimeout(() => {
     const addNewAnnouncementButton = document.getElementById(
@@ -75,7 +75,7 @@ function addNewAnnouncement() {
 
 function addNewTodo() {
   const todo = document.getElementById("todoMessage");
-  console.log(todo.value);
+  // console.log(todo.value);
 
   setTimeout(() => {
     const addNewTodoButton = document.getElementById("addNewTodoButton");
@@ -91,9 +91,14 @@ if (!window.localStorage.getItem("is_admin")) {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
     },
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status == 401 || res.status == 422) {
+        logout();
+      }
+      return res.json();
+    })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data["is_admin"]) {
         window.localStorage.setItem("is_admin", "yes");
         adminNav.classList.remove("d-none");
@@ -111,9 +116,14 @@ fetch(linkDashboard, {
   },
   body: JSON.stringify(sendData),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
-    console.log(data);
+    // console.log(data);
 
     // Dashboard Details
     if (data["message"] != "no data found") {
@@ -237,7 +247,7 @@ fetch(linkDashboard, {
       }
 
       // Tasks
-      const minPercentage = Math.floor((userSolved / minSolved) * 100);
+      const minPercentage = Math.floor((userSolved / minSolved) * 100) || 0;
       tasksPercentage.innerText = `${minPercentage}%`;
 
       tasksProgress.setAttribute("style", `width: ${minPercentage}%`);

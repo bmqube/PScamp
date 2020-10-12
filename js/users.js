@@ -18,7 +18,12 @@ fetch(linkUser, {
   },
   body: JSON.stringify({}),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     if (data["msg"] == "Token has expired") {
@@ -126,7 +131,12 @@ function deleteUser(id) {
       username: id,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       const alert = getAlertElement(data["message"], "alert-info");
       userDeleteAlert.appendChild(alert);

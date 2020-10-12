@@ -8,7 +8,12 @@ fetch(linkSolved, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     const spinnerSolved = document.getElementById("spinnerSolved");

@@ -10,6 +10,9 @@ var ctx = document.getElementById("myPieChart");
 
 fetch(link)
   .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
     return res.json();
   })
   .then((data) => {

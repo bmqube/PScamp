@@ -11,8 +11,12 @@ function logout() {
       Authorization: "Bearer " + window.localStorage.getItem("access_token"),
     },
   })
-  window.localStorage.removeItem("access_token");
-  window.localStorage.removeItem("refresh_token");
-  window.localStorage.removeItem("is_admin");
-  window.location.href = "/login.html";
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    window.localStorage.removeItem("access_token");
+    window.localStorage.removeItem("refresh_token");
+    window.localStorage.removeItem("is_admin");
+    window.location.href = "/login.html";
+  });
 }

@@ -56,7 +56,12 @@ fetch(linkProfile, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     if (data["msg"] == "Token has expired") {
@@ -116,7 +121,12 @@ function updatePersonalInfo() {
         email: email.value,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
       .then((data) => {
         if (data["msg"] == "Token has expired") {
           window.localStorage.removeItem("access_token");
@@ -180,7 +190,12 @@ function updateOJInfo() {
     },
     body: JSON.stringify(sendData),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["msg"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -268,7 +283,12 @@ function updatePassword() {
         password: newPassword1.value,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
       .then((data) => {
         if (data["msg"] == "Token has expired") {
           window.localStorage.removeItem("access_token");

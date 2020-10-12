@@ -29,7 +29,12 @@ fetch(linkUpdateScheduler, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     nextRunOn.innerText += ` ${data["next_run_time"].split(".")[0]}`;
@@ -63,7 +68,12 @@ fetch(linkUser, {
   },
   body: JSON.stringify({}),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     if (data["msg"] == "Token has expired") {
@@ -88,7 +98,12 @@ fetch(linkClass, {
   },
   body: JSON.stringify({}),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
@@ -125,7 +140,12 @@ fetch(linkAnnouncements, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
@@ -198,7 +218,12 @@ fetch(linkTodos, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
@@ -269,7 +294,12 @@ fetch(linkWhitelistedEmail, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
@@ -396,7 +426,12 @@ function updateTodo(id) {
     },
     body: JSON.stringify(sendData),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -424,7 +459,12 @@ function deleteTodo(id) {
       todos_list: [sendData],
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -452,7 +492,12 @@ function deleteAnnouncement(id) {
       announcements_list: [sendData],
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -494,7 +539,12 @@ function updateAnnouncement(id) {
       announcements_list: announcementList,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -584,7 +634,12 @@ function deleteEmail(id) {
       email_list: [email],
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       bootbox.alert(data["message"]);
       setTimeout(() => {
@@ -600,7 +655,12 @@ function syncDB() {
       Authorization: `Bearer ${window.localStorage.getItem("access_token")}`,
     },
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       bootbox.alert(data["message"]);
     });
@@ -645,7 +705,34 @@ function updateDB() {
         interval: parseInt(interval.value, 10),
       }),
     })
-      .then((res) => res.json())
+    fetch(linkUpdateScheduler, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        level: level.value,
+        interval: parseInt(interval.value, 10),
+      }),
+    })
+    fetch(linkUpdateScheduler, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        level: level.value,
+        interval: parseInt(interval.value, 10),
+      }),
+    })
+      .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
       .then((data) => {
         bootbox.alert(data["message"]);
         editDB();
@@ -689,7 +776,12 @@ function addNewEmail() {
         email_list: sendData,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
       .then((data) => {
         bootbox.alert(data);
       });
@@ -760,7 +852,12 @@ function sendMail() {
     },
     body: JSON.stringify(sendData),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       bootbox.alert(data["message"]);
     });
@@ -803,7 +900,12 @@ function addTodo() {
       // send_email: sendEmail.checked,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -852,7 +954,12 @@ function addAnnouncement() {
       // send_email: sendEmail.checked,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["message"] == "Token has expired") {
         window.localStorage.removeItem("access_token");

@@ -255,7 +255,12 @@ fetch(linkClass, {
     Authorization: "Bearer " + window.localStorage.getItem("access_token"),
   },
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     if (data["msg"] == "Token has expired") {
       window.localStorage.removeItem("access_token");
@@ -266,7 +271,7 @@ fetch(linkClass, {
     }
 
     const element = data["classroom_list"];
-    // console.log(element);
+    console.log(element);
 
     let classFound = false;
 
@@ -406,7 +411,12 @@ fetch(linkUser, {
   },
   body: JSON.stringify({}),
 })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
   .then((data) => {
     // console.log(data);
     if (data["msg"] == "Token has expired") {
@@ -456,7 +466,12 @@ function updateClassInfo() {
       user_list: userList,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["msg"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -523,7 +538,12 @@ function deleteClass() {
       classroom_name: classname,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["msg"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -578,7 +598,12 @@ function updateContestInfo() {
     },
     body: JSON.stringify(postData),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["msg"] == "Token has expired") {
         window.localStorage.removeItem("access_token");

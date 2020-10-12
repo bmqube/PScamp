@@ -49,7 +49,12 @@ function updateRankInfo() {
       end_time: timeStampTo || 1000000000000000000000000000000,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
+    return res.json();
+  })
     .then((data) => {
       if (data["msg"] == "Token has expired") {
         window.localStorage.removeItem("access_token");
@@ -146,7 +151,9 @@ fetch(linkRank, {
   }),
 })
   .then((res) => {
-    console.log(res);
+    if (res.status == 401 || res.status == 422) {
+      logout();
+    }
     return res.json();
   })
   .then((data) => {

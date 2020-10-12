@@ -74,6 +74,14 @@ function checkPasswordsMatch(input1, input2) {
   return true;
 }
 
+function isValidUsername(input) {
+  if (input.value.contains(' ')) {
+    showError(input, "Username can not contain spaces");
+    return false;
+  }
+  return true;
+}
+
 // Get fieldname
 function getFieldName(input) {
   return input.id.charAt(0).toUpperCase() + input.id.slice(1);
@@ -96,6 +104,7 @@ function tryRegister(e) {
     checkLength(lastname, 3, 50) &&
     checkLength(username, 3, 50) &&
     checkLength(password, 6, 50) &&
+    isValidUsername(username) && 
     checkEmail(email) &&
     checkPasswordsMatch(password, password2)
   ) {
