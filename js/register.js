@@ -75,7 +75,7 @@ function checkPasswordsMatch(input1, input2) {
 }
 
 function isValidUsername(input) {
-  if (input.value.contains(' ')) {
+  if (input.value.includes(' ')) {
     showError(input, "Username can not contain spaces");
     return false;
   }
